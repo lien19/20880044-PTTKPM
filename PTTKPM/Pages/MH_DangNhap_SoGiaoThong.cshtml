@@ -1,0 +1,23 @@
+﻿@page
+@model PTTKPM.Pages.MH_DangNhap_SoGiaoThongModel
+@{
+}
+
+
+<div class="alert" style="background: yellow; width:max-content; float: none; cursor:pointer; color: red" id="quayLai">
+    <a href="/MH_DangNhap_SoGiaoThong">@Model.chuoi  </a>
+    <span class="closebtn" onclick="this.parentElement.style.display='none';" style="font-size:22px">&times;</span>
+</div>
+
+<div id="login">
+    <form action="" method="post">
+        <label for="email">Email</label>
+        <input type="email" name="email" value="@Model.email" minlength="" maxlength="50" required>
+        <label for="password">Password</label>
+        <input type="password" name="password" value="@Model.password" minlength="" maxlength="50" required>
+
+        <button type="button" class="btn-cancel" onclick="window.location.href='/Index'">Hủy</button>
+        <button type="submit" class="btn-login">Đăng nhập</button>
+        <a href="/MH_DangKy_SoGiaoThong"><i>Bạn chưa có tài khoản? Đăng ký nào!</i></a>
+    </form>
+</div>

@@ -1,0 +1,251 @@
+﻿@page "{handler?}/{Id?}"
+@model PTTKPM.Pages.MH_TuyenTauModel
+@{
+    List<string> colHeader = new List<string>() { "Id", "Mã số tuyến tàu", "Tên tuyến tàu", "Giá vé hiện hành", "Giờ bắt đầu", "Giờ kết thúc", "Thời gian chờ 2 chuyến", "Tình trạng", "Mã số ga bắt đầu", "Mã số ga kết thúc", "Mã số công ty TDN" };
+
+}
+
+<!--****************************** Start-Body Popup Form - Modal ******************************-->
+<div id="search">
+    <form asp-page-handler="search" method="post">
+        <input type="text" name="keyword" value="@Model.keyword">
+        <button type="submit" class="btn-search">Tìm kiếm</button>
+    </form>
+</div>
+<!--****************************** End-Body Popup Form - Modal ******************************-->
+<div class="alert" style="background: yellow; width:max-content; float: right; cursor:pointer; color: red" id="quayLai">
+    <a href="/MH_TuyenTau">@Model.chuoi  </a>
+    <span class="closebtn" onclick="this.parentElement.style.display='none';" style="font-size:22px">&times;</span>
+</div>
+
+<div style="color:#0366d6; cursor:pointer" onclick="document.getElementById('form-popup2').style.display='block'"><b>Tạo mới</b></div>
+
+<!--****************************** Start-TABLE ******************************-->
+<div class="col2" style="overflow:scroll;">
+    <table style="width:max-content">
+        <tr>
+            <th></th>
+            @foreach (var item in colHeader)
+            {
+                <th><div style="text-align:center; ">@item</div></th>
+}
+        </tr>
+        @if (Model.danhsach != null)
+        {
+            @foreach (var item in Model.danhsach)
+            {
+                <tr>
+                    <td><div class="fixed"><div class=""><input type="checkbox" name="ck" id=""></div></div></td>
+                    <td>
+                        <div class="container">
+                            <div class="content">@item.Id</div>
+                            <div class="spacer">@item.Id</div>
+                            <span>&nbsp;</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="container">
+                            <div class="content">@item.MaSoTuyenTau</div>
+                            <div class="spacer">@item.MaSoTuyenTau</div>
+                            <span>&nbsp;</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="container">
+                            <div class="content">@item.TenTuyenTau</div>
+                            <div class="spacer">@item.TenTuyenTau</div>
+                            <span>&nbsp;</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="container">
+                            <div class="content">@item.GiaVeHienHanh</div>
+                            <div class="spacer">@item.GiaVeHienHanh</div>
+                            <span>&nbsp;</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="container">
+                            <div class="content">@item.GioBatDau</div>
+                            <div class="spacer">@item.GioBatDau</div>
+                            <span>&nbsp;</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="container">
+                            <div class="content">@item.GioKetThuc</div>
+                            <div class="spacer">@item.GioKetThuc</div>
+                            <span>&nbsp;</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="container">
+                            <div class="content">@item.ThoiGianCho2Chuyen</div>
+                            <div class="spacer">@item.ThoiGianCho2Chuyen</div>
+                            <span>&nbsp;</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="container">
+                            <div class="content">@item.TinhTrang</div>
+                            <div class="spacer">@item.TinhTrang</div>
+                            <span>&nbsp;</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="container">
+                            <div class="content">@item.GaBatDauId</div>
+                            <div class="spacer">@item.GaBatDauId</div>
+                            <span>&nbsp;</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="container">
+                            <div class="content">@item.GaKetThucId</div>
+                            <div class="spacer">@item.GaKetThucId</div>
+                            <span>&nbsp;</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="container">
+                            <div class="content">@item.CongTyTDNId</div>
+                            <div class="spacer">@item.CongTyTDNId</div>
+                            <span>&nbsp;</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="fixed" style="width:90px">
+                            <a href="/MH_TuyenTau/update?Id=@item.Id">Sửa</a>
+                            @if (Model.QuanTriHeThong_session == "1")
+                            {<span> | </span><a href="/MH_TuyenTau/delete?Id=@item.Id"> Xóa </a>}
+                        </div>
+                        @*<div class="container">
+                                <div class="content"><a href="/MH_TuyenTau/update?Id=@item.Id">Sửa</a> | <a href="/MH_TuyenTau/delete?Id=@item.Id">Xóa</a></div>
+                                <div class="spacer"><a href="#">Sửa</a> <a href="#">Xóa</a></div>
+                                <span>&nbsp;</span>
+                            </div>*@
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+</div>
+<!--****************************** End-TABLE ******************************-->
+<!--****************************** Start-CREATE Popup Form - Modal ******************************-->
+<div class="form-popup" id="form-popup2">
+    <form asp-page-handler="create" class="f-signup" method="post" style="overflow:scroll">
+        <h1>Thêm mới Tuyến tàu</h1>
+        <div class="input_container">
+            <label for="MaSoTuyenTau"><b>Mã số tuyến tàu</b><input type="text" id="MaSoTuyenTau" name="MaSoTuyenTau" value="@Model.MaSoTuyenTau" placeholder="Mã số tuyến tàu" minlength="" maxlength="50" required></label>
+            <label for="TenTuyenTau"><b>Tên tuyến tàu</b><input type="text" name="TenTuyenTau" value="@Model.TenTuyenTau" placeholder="Tên tuyến tàu" minlength="" maxlength="50" required></label>
+            <label for="GiaVeHienHanh"><b>Giá vé hiện hành</b><input type="number" name="GiaVeHienHanh" value="@Model.GiaVeHienHanh" placeholder="Giá vé hiện hành" required></label>
+            <label for="GioBatDau"><b>Giờ bắt đầu</b><input type="text" name="GioBatDau" value="@Model.GioBatDau" placeholder="Giờ bắt đầu" required></label>
+            <label for="GioKetThuc"><b>Giờ kết thúc</b><input type="text" name="GioKetThuc" value="@Model.GioKetThuc" placeholder="Giờ kết thúc" required></label>
+            <label for="ThoiGianCho2Chuyen"><b>Thời gian chờ 2 chuyến</b><input type="number" name="ThoiGianCho2Chuyen" value="@Model.ThoiGianCho2Chuyen" placeholder="Thời gian chờ 2 chuyến" required></label>
+            <label for="TinhTrang"><b>Tình trạng</b><input type="text" name="TinhTrang" value="@Model.TinhTrang" placeholder="Tình trạng" minlength="" maxlength="50" required></label>
+            <label for="GaBatDauId">
+                <b>Mã số ga bắt đầu</b>
+                <select name="GaBatDauId" required>
+                    <option value=""> </option>
+                    @if (Model.DS_Ga != null)
+                    {
+                        foreach (var Ga in Model.DS_Ga)
+                        {
+                            <option value="@Ga.Id"> @Ga.Id </option>
+}
+                    }
+                </select>
+            </label>
+            <label for="GaKetThucId">
+                <b>Mã số ga kết thúc</b>
+                <select name="GaKetThucId" required>
+                    <option value=""> </option>
+                    @if (Model.DS_Ga != null)
+                    {
+                        foreach (var Ga in Model.DS_Ga)
+                        {
+                            <option value="@Ga.Id"> @Ga.Id </option>
+}
+                    }
+                </select>
+            </label>
+            <label for="CongTyTDNId"><b>Mã số công ty TDN</b><input type="text" name="CongTyTDNId" value="@Model.CongTyTDNId" placeholder="Mã số công ty TDN" required readonly></label>
+
+        </div>
+
+        <button type="button" class="btn" onclick="document.getElementById('form-popup2').style.display='none'">Hủy</button>
+        <button type="submit" class="btn btn-signup">Thêm</button>
+    </form>
+</div>
+<!--****************************** End-CREATE Popup Form ******************************-->
+<!--****************************** Start-UPDATE Popup Form - Modal ******************************-->
+<div class="form-popup" id="form-popup3">
+    <form asp-page-handler="update" class="f-signup" method="post" id="form_update" asp-route-id="@Model.Id" style="overflow:scroll">
+        <h1>Cập nhật Tuyến tàu</h1>
+        <div class="input_container">
+            <label for="MaSoTuyenTau"><b>Mã số tuyến tàu</b><input type="text" id="MaSoTuyenTau" name="MaSoTuyenTau" value="@Model.MaSoTuyenTau" placeholder="Mã số tuyến tàu" minlength="" maxlength="50" required readonly></label>
+            <label for="TenTuyenTau"><b>Tên tuyến tàu</b><input type="text" name="TenTuyenTau" value="@Model.TenTuyenTau" placeholder="Tên tuyến tàu" minlength="" maxlength="50" required></label>
+            <label for="GiaVeHienHanh"><b>Giá vé hiện hành</b><input type="number" name="GiaVeHienHanh" value="@Model.GiaVeHienHanh" placeholder="Giá vé hiện hành" required></label>
+            <label for="GioBatDau"><b>Giờ bắt đầu</b><input type="datetime" name="GioBatDau" value="@Model.GioBatDau" placeholder="Giờ bắt đầu" required></label>
+            <label for="GioKetThuc"><b>Giờ kết thúc</b><input type="datetime" name="GioKetThuc" value="@Model.GioKetThuc" placeholder="Giờ kết thúc" required></label>
+            <label for="ThoiGianCho2Chuyen"><b>Thời gian chờ 2 chuyến</b><input type="number" name="ThoiGianCho2Chuyen" value="@Model.ThoiGianCho2Chuyen" placeholder="Thời gian chờ 2 chuyến" required></label>
+            <label for="TinhTrang"><b>Tình trạng</b><input type="text" name="TinhTrang" value="@Model.TinhTrang" placeholder="Tình trạng" minlength="" maxlength="50" required></label>
+            <label for="GaBatDauId">
+                <b>Mã số ga bắt đầu</b>
+                <select name="GaBatDauId" required>
+                    <option value="" disabled> </option>
+                    @if (Model.DS_Ga != null)
+                    {
+                        foreach (var item in Model.DS_Ga)
+                        {
+                            if (@item.Id != @Model.GaBatDauId)
+                            {
+                                <option value="@item.Id"> @item.Id </option>
+ }
+                            else
+                            {
+                                <option value="@Model.GaBatDauId" selected> @item.Id </option>
+}
+                        }
+                    }
+                </select>
+            </label>
+            <label for="GaKetThucId">
+                <b>Mã số ga kết thúc</b>
+                <select name="GaKetThucId" required>
+                    <option value="" disabled> </option>
+                    @if (Model.DS_Ga != null)
+                    {
+                        foreach (var item in Model.DS_Ga)
+                        {
+                            if (@item.Id != @Model.GaKetThucId)
+                            {
+                                <option value="@item.Id"> @item.Id </option>
+ }
+                            else
+                            {
+                                <option value="@Model.GaKetThucId" selected> @item.Id </option>
+}
+                        }
+                    }
+                </select>
+            </label>
+            <label for="CongTyTDNId"><b>Mã số công ty TDN</b><input type="text" name="CongTyTDNId" value="@Model.CongTyTDNId" placeholder="Mã số công ty TDN" required readonly></label>
+
+        </div>
+
+        <button type="button" class="btn" onclick="cancel()">Hủy</button>
+        <button type="submit" class="btn btn-signup">Cập nhật</button>
+    </form>
+</div>
+<!--****************************** End-UPDATE Popup Form ******************************-->
+<!--****************************** Start-DELETE Popup Form - Modal ******************************-->
+<div class="form-popup" id="form-popup4">
+    <form asp-page-handler="delete" class="f-signup" method="post" id="form_delete" asp-route-id="@Model.Id">
+        <p>Vui lòng xác nhận bạn muốn xóa mã @Model.MaSoTuyenTau bằng cách nhấn nút Xóa.</p>
+
+        <button type="button" class="btn" onclick="cancel()">Hủy</button>
+        <button type="submit" class="btn btn-signup">Xóa</button>
+    </form>
+</div>
+<!--****************************** End-DELETE Popup Form ******************************-->

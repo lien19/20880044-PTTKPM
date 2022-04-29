@@ -1,0 +1,30 @@
+﻿@page
+@model PTTKPM.Pages.MH_DangKy_CongTyTDNModel
+@{
+}
+
+<div class="alert" style="background: yellow; width:max-content; float: none; cursor:pointer; color: red" id="quayLai">
+    <a href="/MH_DangKy_CongTyTDN">@Model.chuoi  </a>
+    <span class="closebtn" onclick="this.parentElement.style.display='none';" style="font-size:22px">&times;</span>
+</div>
+
+<div id="login">
+    <form action="" method="post">
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" value="@Model.email" minlength="" maxlength="50" required>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" value="@Model.password" minlength="" maxlength="50" required>
+        <label for="confirmpassword">Confirm Password</label>
+        <input type="password" name="confirmpassword" id="confirmpassword" value="@Model.confirmpassword" minlength="" maxlength="50" required>
+        <label for="MaSoCongTyTDN">Mã số công ty TDN</label>
+        <select name="MaSoCongTyTDN" id="MaSoCongTyTDN" required>
+            <option value=""> </option>
+            @if (Model.DS_CongTyTDN != null) { foreach (var CongTyTDN in Model.DS_CongTyTDN) { <option value="@Model.CongTyTDNId"> @CongTyTDN.Id </option> } }
+        </select>
+        
+        <button type="button" class="btn-cancel" onclick="window.location.href='/Index'">Hủy</button>
+        <button type="submit" class="btn-login">Đăng ký</button>
+        <a href="/MH_DangNhap_CongTyTDN"><i>Bạn có tài khoản rồi? Đăng nhập thôi!</i></a>
+    </form>
+
+</div>

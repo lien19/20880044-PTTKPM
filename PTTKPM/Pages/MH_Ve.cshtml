@@ -1,0 +1,182 @@
+﻿@page "{handler?}/{Id?}"
+@model PTTKPM.Pages.MH_VeModel
+@{
+    List<string> colHeader = new List<string>() { "Id", "Mã số vé", "Giá", "Ngày Bán Vé", "Mã số tuyến tàu", "Mã số công ty TDN" };
+
+}
+
+<!--****************************** Start-Body Popup Form - Modal ******************************-->
+<div id="search">
+    <form asp-page-handler="search" method="post">
+        <input type="text" name="keyword" value="@Model.keyword">
+        <button type="submit" class="btn-search">Tìm kiếm</button>
+    </form>
+</div>
+<!--****************************** End-Body Popup Form - Modal ******************************-->
+<div class="alert" style="background: yellow; width:max-content; float: right; cursor:pointer; color: red" id="quayLai">
+    <a href="/MH_Ve">@Model.chuoi  </a>
+    <span class="closebtn" onclick="this.parentElement.style.display='none';" style="font-size:22px">&times;</span>
+</div>
+
+<div style="color:#0366d6; cursor:pointer" onclick="document.getElementById('form-popup2').style.display='block'"><b>Tạo mới</b></div>
+
+<!--****************************** Start-Body Popup Form - Modal ******************************-->
+<div class="col2" style="overflow:scroll;">
+    <table>
+        <tr>
+            <th></th>
+            @foreach (var item in colHeader)
+            {
+                <th><div style="text-align:center; ">@item</div></th>
+            }
+        </tr>
+        @if (Model.danhsach != null)
+        {
+            @foreach (var item in Model.danhsach)
+            {
+                <tr>
+                    <td><div class="fixed"><div class=""><input type="checkbox" name="ck" id=""></div></div></td>
+                    <td>
+                        <div class="container">
+                            <div class="content">@item.Id</div>
+                            <div class="spacer">@item.Id</div>
+                            <span>&nbsp;</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="container">
+                            <div class="content">@item.MaSoVe</div>
+                            <div class="spacer">@item.MaSoVe</div>
+                            <span>&nbsp;</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="container">
+                            <div class="content">@item.Gia</div>
+                            <div class="spacer">@item.Gia</div>
+                            <span>&nbsp;</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="container">
+                            <div class="content">@item.NgayBanVe</div>
+                            <div class="spacer">@item.NgayBanVe</div>
+                            <span>&nbsp;</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="container">
+                            <div class="content">@item.TuyenTauId</div>
+                            <div class="spacer">@item.TuyenTauId</div>
+                            <span>&nbsp;</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="container">
+                            <div class="content">@item.CongTyTDNId</div>
+                            <div class="spacer">@item.CongTyTDNId</div>
+                            <span>&nbsp;</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="container">
+                            <div class="content">
+                                <a href="/MH_Ve/update?Id=@item.Id">Sửa</a>
+                                @if (Model.QuanTriHeThong_session == "1")
+                                {<span> | </span><a href="/MH_Ve/delete?Id=@item.Id"> Xóa </a>}
+                            </div>
+                            <div class="spacer"><a href="#">Sửa</a> <a href="#">Xóa</a></div>
+                            <span>&nbsp;</span>
+                        </div>
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+</div>
+<!--****************************** End-Body Popup Form - Modal ******************************-->
+<!--****************************** Start-CREATE Popup Form - Modal ******************************-->
+<div class="form-popup" id="form-popup2">
+    <form asp-page-handler="create" class="f-signup" method="post">
+        <h1>Thêm mới Vé</h1>
+        <div class="input_container">
+            <label for="MaSoVe"><b>Mã số vé</b><input type="text" id="MaSoVe" name="MaSoVe" value="@Model.MaSoVe" placeholder="Mã số vé" required></label>
+            <label for="Gia"><b>Giá</b><input type="number" name="Gia" value="@Model.Gia" placeholder="Giá" required></label>
+            <label for="NgayBanVe"><b>Ngày Bán Vé</b><input type="datetime" name="NgayBanVe" value="@Model.NgayBanVe" placeholder="Ngày Bán Vé" min="" max="" required></label>
+            <label for="TuyenTauId">
+                <b>Mã số tuyến tàu</b>
+                <select name="TuyenTauId" required>
+                    <option value=""> </option>
+                    @if (Model.DS_TuyenTau != null)
+                    {
+                        foreach (var TuyenTau in Model.DS_TuyenTau)
+                        {
+                            <option value="@TuyenTau.Id"> @TuyenTau.Id </option>
+                        }
+                    }
+                </select>
+            </label>
+            <label for="CongTyTDNId"><b>Mã số công ty TDN</b><input type="text" name="CongTyTDNId" value="@Model.CongTyTDNId" placeholder="Mã số công ty TDN" required readonly></label>
+        </div>
+
+        <button type="button" class="btn" onclick="document.getElementById('form-popup2').style.display='none'">Hủy</button>
+        <button type="submit" class="btn btn-signup">Thêm</button>
+    </form>
+</div>
+<!--****************************** End-CREATE Popup Form ******************************-->
+<!--****************************** Start-UPDATE Popup Form - Modal ******************************-->
+<div class="form-popup" id="form-popup3">
+    <form asp-page-handler="update" class="f-signup" method="post" id="form_update" asp-route-id="@Model.Id">
+        <h1>Cập nhật Vé</h1>
+        <div class="input_container">
+            <label for="MaSoVe"><b>Mã số vé</b><input type="text" id="MaSoVe" name="MaSoVe" value="@Model.MaSoVe" placeholder="Mã số vé" required readonly></label>
+            <label for="Gia"><b>Giá</b><input type="number" name="Gia" value="@Model.Gia" placeholder="Giá" required></label>
+            <label for="NgayBanVe"><b>Ngày Bán Vé</b><input type="datetime" name="NgayBanVe" value="@Model.NgayBanVe" placeholder="Ngày Bán Vé" required></label>
+            <label for="TuyenTauId">
+                <b>Mã số tuyến tàu</b>
+                <select name="TuyenTauId" onchange="loadLoaiHang('/input/LoaiHang.txt')" required>
+                    <option value="" disabled> </option>
+                    @if (Model.DS_TuyenTau != null)
+                    {
+                        foreach (var item in Model.DS_TuyenTau)
+                        {
+                            if (@item.Id != @Model.TuyenTauId)
+                            {
+                                <option value="@item.Id"> @item.Id </option>
+                            }
+                            else
+                            {
+                                <option value="@Model.TuyenTauId" selected> @item.Id </option>
+                            }
+                        }
+                    }
+                </select>
+            </label>
+            <label for="CongTyTDNId"><b>Mã số công ty TDN</b><input type="text" name="CongTyTDNId" value="@Model.CongTyTDNId" placeholder="Mã số công ty TDN" required readonly></label>
+        </div>
+
+        <button type="button" class="btn" onclick="cancel()">Hủy</button>
+        <button type="submit" class="btn btn-signup">Cập nhật</button>
+    </form>
+</div>
+<!--****************************** End-UPDATE Popup Form ******************************-->
+<!--****************************** Start-DELETE Popup Form - Modal ******************************-->
+<div class="form-popup" id="form-popup4">
+    <form asp-page-handler="delete" class="f-signup" method="post" id="form_delete" asp-route-id="@Model.Id">
+        <p>Vui lòng xác nhận bạn muốn xóa mã @Model.Id bằng cách nhấn nút Xóa.</p>
+
+        <button type="button" class="btn" onclick="cancel()">Hủy</button>
+        <button type="submit" class="btn btn-signup">Xóa</button>
+    </form>
+</div>
+<!--****************************** End-DELETE Popup Form ******************************-->
+
+
+
+@*<input type="text" name="ngayhd" id="datetimepicker1" value="" autocomplete="off" style="width: 125px; " required />
+
+<script type="text/javascript">
+    $(function () {
+        $('#datetimepicker1').datetimepicker();
+    });
+</script>*@

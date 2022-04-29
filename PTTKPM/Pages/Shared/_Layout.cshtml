@@ -1,0 +1,3263 @@
+﻿@using Microsoft.AspNetCore.Http
+@{
+    var email          = Context.Session.GetString("email");
+    var PhanLoai       = Context.Session.GetString("PhanLoai");
+    var CongTyTDNId    = Context.Session.GetString("CongTyTDNId");
+    var QuanTriHeThong = Context.Session.GetString("QuanTriHeThong");
+
+    string chuoi = string.Empty;
+
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - PTTKPM</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    @*<link rel="stylesheet" href="~/css/bootstrap-datetimepicker.min.css" />
+        <link rel="stylesheet" href="~/css/bootstrap-datetimepicker.css" />
+        <link rel="stylesheet" href="~/css/build_standalone.less" />
+        <link rel="stylesheet" href="~/css/build.less" />*@
+    <link rel="stylesheet" href="~/jquery-ui.css" />
+    @*Scripts.Render("~/bundles/jquery")
+    Scripts.Render("~/bundles/bootstrap")*@
+
+
+    <style>
+        /* font-icon */
+        .font {
+            font: 20px/1 FontAwesome;
+        }
+
+        .font-glass:before {
+            content: "\f000"
+        }
+
+        .font-music:before {
+            content: "\f001"
+        }
+
+        .font-search:before {
+            content: "\f002"
+        }
+
+        .font-envelope-o:before {
+            content: "\f003"
+        }
+
+        .font-heart:before {
+            content: "\f004"
+        }
+
+        .font-star:before {
+            content: "\f005"
+        }
+
+        .font-star-o:before {
+            content: "\f006"
+        }
+
+        .font-user:before {
+            content: "\f007"
+        }
+
+        .font-film:before {
+            content: "\f008"
+        }
+
+        .font-th-large:before {
+            content: "\f009"
+        }
+
+        .font-th:before {
+            content: "\f00a"
+        }
+
+        .font-th-list:before {
+            content: "\f00b"
+        }
+
+        .font-check:before {
+            content: "\f00c"
+        }
+
+        .font-remove:before, .font-close:before, .font-times:before {
+            content: "\f00d"
+        }
+
+        .font-search-plus:before {
+            content: "\f00e"
+        }
+
+        .font-search-minus:before {
+            content: "\f010"
+        }
+
+        .font-power-off:before {
+            content: "\f011"
+        }
+
+        .font-signal:before {
+            content: "\f012"
+        }
+
+        .font-gear:before, .font-cog:before {
+            content: "\f013"
+        }
+
+        .font-trash-o:before {
+            content: "\f014"
+        }
+
+        .font-home:before {
+            content: "\f015"
+        }
+
+        .font-file-o:before {
+            content: "\f016"
+        }
+
+        .font-clock-o:before {
+            content: "\f017"
+        }
+
+        .font-road:before {
+            content: "\f018"
+        }
+
+        .font-download:before {
+            content: "\f019"
+        }
+
+        .font-arrow-circle-o-down:before {
+            content: "\f01a"
+        }
+
+        .font-arrow-circle-o-up:before {
+            content: "\f01b"
+        }
+
+        .font-inbox:before {
+            content: "\f01c"
+        }
+
+        .font-play-circle-o:before {
+            content: "\f01d"
+        }
+
+        .font-rotate-right:before, .font-repeat:before {
+            content: "\f01e"
+        }
+
+        .font-refresh:before {
+            content: "\f021"
+        }
+
+        .font-list-alt:before {
+            content: "\f022"
+        }
+
+        .font-lock:before {
+            content: "\f023"
+        }
+
+        .font-flag:before {
+            content: "\f024"
+        }
+
+        .font-headphones:before {
+            content: "\f025"
+        }
+
+        .font-volume-off:before {
+            content: "\f026"
+        }
+
+        .font-volume-down:before {
+            content: "\f027"
+        }
+
+        .font-volume-up:before {
+            content: "\f028"
+        }
+
+        .font-qrcode:before {
+            content: "\f029"
+        }
+
+        .font-barcode:before {
+            content: "\f02a"
+        }
+
+        .font-tag:before {
+            content: "\f02b"
+        }
+
+        .font-tags:before {
+            content: "\f02c"
+        }
+
+        .font-book:before {
+            content: "\f02d"
+        }
+
+        .font-bookmark:before {
+            content: "\f02e"
+        }
+
+        .font-print:before {
+            content: "\f02f"
+        }
+
+        .font-camera:before {
+            content: "\f030"
+        }
+
+        .font-font:before {
+            content: "\f031"
+        }
+
+        .font-bold:before {
+            content: "\f032"
+        }
+
+        .font-italic:before {
+            content: "\f033"
+        }
+
+        .font-text-height:before {
+            content: "\f034"
+        }
+
+        .font-text-width:before {
+            content: "\f035"
+        }
+
+        .font-align-left:before {
+            content: "\f036"
+        }
+
+        .font-align-center:before {
+            content: "\f037"
+        }
+
+        .font-align-right:before {
+            content: "\f038"
+        }
+
+        .font-align-justify:before {
+            content: "\f039"
+        }
+
+        .font-list:before {
+            content: "\f03a"
+        }
+
+        .font-dedent:before, .font-outdent:before {
+            content: "\f03b"
+        }
+
+        .font-indent:before {
+            content: "\f03c"
+        }
+
+        .font-video-camera:before {
+            content: "\f03d"
+        }
+
+        .font-photo:before, .font-image:before, .font-picture-o:before {
+            content: "\f03e"
+        }
+
+        .font-pencil:before {
+            content: "\f040"
+        }
+
+        .font-map-marker:before {
+            content: "\f041"
+        }
+
+        .font-adjust:before {
+            content: "\f042"
+        }
+
+        .font-tint:before {
+            content: "\f043"
+        }
+
+        .font-edit:before, .font-pencil-square-o:before {
+            content: "\f044"
+        }
+
+        .font-share-square-o:before {
+            content: "\f045"
+        }
+
+        .font-check-square-o:before {
+            content: "\f046"
+        }
+
+        .font-arrows:before {
+            content: "\f047"
+        }
+
+        .font-step-backward:before {
+            content: "\f048"
+        }
+
+        .font-fontst-backward:before {
+            content: "\f049"
+        }
+
+        .font-backward:before {
+            content: "\f04a"
+        }
+
+        .font-play:before {
+            content: "\f04b"
+        }
+
+        .font-pause:before {
+            content: "\f04c"
+        }
+
+        .font-stop:before {
+            content: "\f04d"
+        }
+
+        .font-forward:before {
+            content: "\f04e"
+        }
+
+        .font-fontst-forward:before {
+            content: "\f050"
+        }
+
+        .font-step-forward:before {
+            content: "\f051"
+        }
+
+        .font-eject:before {
+            content: "\f052"
+        }
+
+        .font-chevron-left:before {
+            content: "\f053"
+        }
+
+        .font-chevron-right:before {
+            content: "\f054"
+        }
+
+        .font-plus-circle:before {
+            content: "\f055"
+        }
+
+        .font-minus-circle:before {
+            content: "\f056"
+        }
+
+        .font-times-circle:before {
+            content: "\f057"
+        }
+
+        .font-check-circle:before {
+            content: "\f058"
+        }
+
+        .font-question-circle:before {
+            content: "\f059"
+        }
+
+        .font-info-circle:before {
+            content: "\f05a"
+        }
+
+        .font-crosshairs:before {
+            content: "\f05b"
+        }
+
+        .font-times-circle-o:before {
+            content: "\f05c"
+        }
+
+        .font-check-circle-o:before {
+            content: "\f05d"
+        }
+
+        .font-ban:before {
+            content: "\f05e"
+        }
+
+        .font-arrow-left:before {
+            content: "\f060"
+        }
+
+        .font-arrow-right:before {
+            content: "\f061"
+        }
+
+        .font-arrow-up:before {
+            content: "\f062"
+        }
+
+        .font-arrow-down:before {
+            content: "\f063"
+        }
+
+        .font-mail-forward:before, .font-share:before {
+            content: "\f064"
+        }
+
+        .font-expand:before {
+            content: "\f065"
+        }
+
+        .font-compress:before {
+            content: "\f066"
+        }
+
+        .font-plus:before {
+            content: "\f067"
+        }
+
+        .font-minus:before {
+            content: "\f068"
+        }
+
+        .font-asterisk:before {
+            content: "\f069"
+        }
+
+        .font-exclamation-circle:before {
+            content: "\f06a"
+        }
+
+        .font-gift:before {
+            content: "\f06b"
+        }
+
+        .font-leaf:before {
+            content: "\f06c"
+        }
+
+        .font-fire:before {
+            content: "\f06d"
+        }
+
+        .font-eye:before {
+            content: "\f06e"
+        }
+
+        .font-eye-slash:before {
+            content: "\f070"
+        }
+
+        .font-warning:before, .font-exclamation-triangle:before {
+            content: "\f071"
+        }
+
+        .font-plane:before {
+            content: "\f072"
+        }
+
+        .font-calendar:before {
+            content: "\f073"
+        }
+
+        .font-random:before {
+            content: "\f074"
+        }
+
+        .font-comment:before {
+            content: "\f075"
+        }
+
+        .font-magnet:before {
+            content: "\f076"
+        }
+
+        .font-chevron-up:before {
+            content: "\f077"
+        }
+
+        .font-chevron-down:before {
+            content: "\f078"
+        }
+
+        .font-retweet:before {
+            content: "\f079"
+        }
+
+        .font-shopping-cart:before {
+            content: "\f07a"
+        }
+
+        .font-folder:before {
+            content: "\f07b"
+        }
+
+        .font-folder-open:before {
+            content: "\f07c"
+        }
+
+        .font-arrows-v:before {
+            content: "\f07d"
+        }
+
+        .font-arrows-h:before {
+            content: "\f07e"
+        }
+
+        .font-bar-chart-o:before, .font-bar-chart:before {
+            content: "\f080"
+        }
+
+        .font-twitter-square:before {
+            content: "\f081"
+        }
+
+        .font-facebook-square:before {
+            content: "\f082"
+        }
+
+        .font-camera-retro:before {
+            content: "\f083"
+        }
+
+        .font-key:before {
+            content: "\f084"
+        }
+
+        .font-gears:before, .font-cogs:before {
+            content: "\f085"
+        }
+
+        .font-comments:before {
+            content: "\f086"
+        }
+
+        .font-thumbs-o-up:before {
+            content: "\f087"
+        }
+
+        .font-thumbs-o-down:before {
+            content: "\f088"
+        }
+
+        .font-star-half:before {
+            content: "\f089"
+        }
+
+        .font-heart-o:before {
+            content: "\f08a"
+        }
+
+        .font-sign-out:before {
+            content: "\f08b"
+        }
+
+        .font-linkedin-square:before {
+            content: "\f08c"
+        }
+
+        .font-thumb-tack:before {
+            content: "\f08d"
+        }
+
+        .font-external-link:before {
+            content: "\f08e"
+        }
+
+        .font-sign-in:before {
+            content: "\f090"
+        }
+
+        .font-trophy:before {
+            content: "\f091"
+        }
+
+        .font-github-square:before {
+            content: "\f092"
+        }
+
+        .font-upload:before {
+            content: "\f093"
+        }
+
+        .font-lemon-o:before {
+            content: "\f094"
+        }
+
+        .font-phone:before {
+            content: "\f095"
+        }
+
+        .font-square-o:before {
+            content: "\f096"
+        }
+
+        .font-bookmark-o:before {
+            content: "\f097"
+        }
+
+        .font-phone-square:before {
+            content: "\f098"
+        }
+
+        .font-twitter:before {
+            content: "\f099"
+        }
+
+        .font-facebook-f:before, .font-facebook:before {
+            content: "\f09a"
+        }
+
+        .font-github:before {
+            content: "\f09b"
+        }
+
+        .font-unlock:before {
+            content: "\f09c"
+        }
+
+        .font-credit-card:before {
+            content: "\f09d"
+        }
+
+        .font-feed:before, .font-rss:before {
+            content: "\f09e"
+        }
+
+        .font-hdd-o:before {
+            content: "\f0a0"
+        }
+
+        .font-bullhorn:before {
+            content: "\f0a1"
+        }
+
+        .font-bell:before {
+            content: "\f0f3"
+        }
+
+        .font-certificate:before {
+            content: "\f0a3"
+        }
+
+        .font-hand-o-right:before {
+            content: "\f0a4"
+        }
+
+        .font-hand-o-left:before {
+            content: "\f0a5"
+        }
+
+        .font-hand-o-up:before {
+            content: "\f0a6"
+        }
+
+        .font-hand-o-down:before {
+            content: "\f0a7"
+        }
+
+        .font-arrow-circle-left:before {
+            content: "\f0a8"
+        }
+
+        .font-arrow-circle-right:before {
+            content: "\f0a9"
+        }
+
+        .font-arrow-circle-up:before {
+            content: "\f0aa"
+        }
+
+        .font-arrow-circle-down:before {
+            content: "\f0ab"
+        }
+
+        .font-globe:before {
+            content: "\f0ac"
+        }
+
+        .font-wrench:before {
+            content: "\f0ad"
+        }
+
+        .font-tasks:before {
+            content: "\f0ae"
+        }
+
+        .font-filter:before {
+            content: "\f0b0"
+        }
+
+        .font-briefcase:before {
+            content: "\f0b1"
+        }
+
+        .font-arrows-alt:before {
+            content: "\f0b2"
+        }
+
+        .font-group:before, .font-users:before {
+            content: "\f0c0"
+        }
+
+        .font-chain:before, .font-link:before {
+            content: "\f0c1"
+        }
+
+        .font-cloud:before {
+            content: "\f0c2"
+        }
+
+        .font-flask:before {
+            content: "\f0c3"
+        }
+
+        .font-cut:before, .font-scissors:before {
+            content: "\f0c4"
+        }
+
+        .font-copy:before, .font-files-o:before {
+            content: "\f0c5"
+        }
+
+        .font-paperclip:before {
+            content: "\f0c6"
+        }
+
+        .font-save:before, .font-floppy-o:before {
+            content: "\f0c7"
+        }
+
+        .font-square:before {
+            content: "\f0c8"
+        }
+
+        .font-navicon:before, .font-reorder:before, .font-bars:before {
+            content: "\f0c9"
+        }
+
+        .font-list-ul:before {
+            content: "\f0ca"
+        }
+
+        .font-list-ol:before {
+            content: "\f0cb"
+        }
+
+        .font-strikethrough:before {
+            content: "\f0cc"
+        }
+
+        .font-underline:before {
+            content: "\f0cd"
+        }
+
+        .font-table:before {
+            content: "\f0ce"
+        }
+
+        .font-magic:before {
+            content: "\f0d0"
+        }
+
+        .font-truck:before {
+            content: "\f0d1"
+        }
+
+        .font-pinterest:before {
+            content: "\f0d2"
+        }
+
+        .font-pinterest-square:before {
+            content: "\f0d3"
+        }
+
+        .font-google-plus-square:before {
+            content: "\f0d4"
+        }
+
+        .font-google-plus:before {
+            content: "\f0d5"
+        }
+
+        .font-money:before {
+            content: "\f0d6"
+        }
+
+        .font-caret-down:before {
+            content: "\f0d7"
+        }
+
+        .font-caret-up:before {
+            content: "\f0d8"
+        }
+
+        .font-caret-left:before {
+            content: "\f0d9"
+        }
+
+        .font-caret-right:before {
+            content: "\f0da"
+        }
+
+        .font-columns:before {
+            content: "\f0db"
+        }
+
+        .font-unsorted:before, .font-sort:before {
+            content: "\f0dc"
+        }
+
+        .font-sort-down:before, .font-sort-desc:before {
+            content: "\f0dd"
+        }
+
+        .font-sort-up:before, .font-sort-asc:before {
+            content: "\f0de"
+        }
+
+        .font-envelope:before {
+            content: "\f0e0"
+        }
+
+        .font-linkedin:before {
+            content: "\f0e1"
+        }
+
+        .font-rotate-left:before, .font-undo:before {
+            content: "\f0e2"
+        }
+
+        .font-legal:before, .font-gavel:before {
+            content: "\f0e3"
+        }
+
+        .font-dashboard:before, .font-tachometer:before {
+            content: "\f0e4"
+        }
+
+        .font-comment-o:before {
+            content: "\f0e5"
+        }
+
+        .font-comments-o:before {
+            content: "\f0e6"
+        }
+
+        .font-flash:before, .font-bolt:before {
+            content: "\f0e7"
+        }
+
+        .font-sitemap:before {
+            content: "\f0e8"
+        }
+
+        .font-umbrella:before {
+            content: "\f0e9"
+        }
+
+        .font-paste:before, .font-clipboard:before {
+            content: "\f0ea"
+        }
+
+        .font-lightbulb-o:before {
+            content: "\f0eb"
+        }
+
+        .font-exchange:before {
+            content: "\f0ec"
+        }
+
+        .font-cloud-download:before {
+            content: "\f0ed"
+        }
+
+        .font-cloud-upload:before {
+            content: "\f0ee"
+        }
+
+        .font-user-md:before {
+            content: "\f0f0"
+        }
+
+        .font-stethoscope:before {
+            content: "\f0f1"
+        }
+
+        .font-suitcase:before {
+            content: "\f0f2"
+        }
+
+        .font-bell-o:before {
+            content: "\f0a2"
+        }
+
+        .font-coffee:before {
+            content: "\f0f4"
+        }
+
+        .font-cutlery:before {
+            content: "\f0f5"
+        }
+
+        .font-file-text-o:before {
+            content: "\f0f6"
+        }
+
+        .font-building-o:before {
+            content: "\f0f7"
+        }
+
+        .font-hospital-o:before {
+            content: "\f0f8"
+        }
+
+        .font-ambulance:before {
+            content: "\f0f9"
+        }
+
+        .font-medkit:before {
+            content: "\f0font"
+        }
+
+        .font-fighter-jet:before {
+            content: "\f0fb"
+        }
+
+        .font-beer:before {
+            content: "\f0fc"
+        }
+
+        .font-h-square:before {
+            content: "\f0fd"
+        }
+
+        .font-plus-square:before {
+            content: "\f0fe"
+        }
+
+        .font-angle-double-left:before {
+            content: "\f100"
+        }
+
+        .font-angle-double-right:before {
+            content: "\f101"
+        }
+
+        .font-angle-double-up:before {
+            content: "\f102"
+        }
+
+        .font-angle-double-down:before {
+            content: "\f103"
+        }
+
+        .font-angle-left:before {
+            content: "\f104"
+        }
+
+        .font-angle-right:before {
+            content: "\f105"
+        }
+
+        .font-angle-up:before {
+            content: "\f106"
+        }
+
+        .font-angle-down:before {
+            content: "\f107"
+        }
+
+        .font-desktop:before {
+            content: "\f108"
+        }
+
+        .font-laptop:before {
+            content: "\f109"
+        }
+
+        .font-tablet:before {
+            content: "\f10a"
+        }
+
+        .font-mobile-phone:before, .font-mobile:before {
+            content: "\f10b"
+        }
+
+        .font-circle-o:before {
+            content: "\f10c"
+        }
+
+        .font-quote-left:before {
+            content: "\f10d"
+        }
+
+        .font-quote-right:before {
+            content: "\f10e"
+        }
+
+        .font-spinner:before {
+            content: "\f110"
+        }
+
+        .font-circle:before {
+            content: "\f111"
+        }
+
+        .font-mail-reply:before, .font-reply:before {
+            content: "\f112"
+        }
+
+        .font-github-alt:before {
+            content: "\f113"
+        }
+
+        .font-folder-o:before {
+            content: "\f114"
+        }
+
+        .font-folder-open-o:before {
+            content: "\f115"
+        }
+
+        .font-smile-o:before {
+            content: "\f118"
+        }
+
+        .font-frown-o:before {
+            content: "\f119"
+        }
+
+        .font-meh-o:before {
+            content: "\f11a"
+        }
+
+        .font-gamepad:before {
+            content: "\f11b"
+        }
+
+        .font-keyboard-o:before {
+            content: "\f11c"
+        }
+
+        .font-flag-o:before {
+            content: "\f11d"
+        }
+
+        .font-flag-checkered:before {
+            content: "\f11e"
+        }
+
+        .font-terminal:before {
+            content: "\f120"
+        }
+
+        .font-code:before {
+            content: "\f121"
+        }
+
+        .font-mail-reply-all:before, .font-reply-all:before {
+            content: "\f122"
+        }
+
+        .font-star-half-empty:before, .font-star-half-full:before, .font-star-half-o:before {
+            content: "\f123"
+        }
+
+        .font-location-arrow:before {
+            content: "\f124"
+        }
+
+        .font-crop:before {
+            content: "\f125"
+        }
+
+        .font-code-fork:before {
+            content: "\f126"
+        }
+
+        .font-unlink:before, .font-chain-broken:before {
+            content: "\f127"
+        }
+
+        .font-question:before {
+            content: "\f128"
+        }
+
+        .font-info:before {
+            content: "\f129"
+        }
+
+        .font-exclamation:before {
+            content: "\f12a"
+        }
+
+        .font-superscript:before {
+            content: "\f12b"
+        }
+
+        .font-subscript:before {
+            content: "\f12c"
+        }
+
+        .font-eraser:before {
+            content: "\f12d"
+        }
+
+        .font-puzzle-piece:before {
+            content: "\f12e"
+        }
+
+        .font-microphone:before {
+            content: "\f130"
+        }
+
+        .font-microphone-slash:before {
+            content: "\f131"
+        }
+
+        .font-shield:before {
+            content: "\f132"
+        }
+
+        .font-calendar-o:before {
+            content: "\f133"
+        }
+
+        .font-fire-extinguisher:before {
+            content: "\f134"
+        }
+
+        .font-rocket:before {
+            content: "\f135"
+        }
+
+        .font-maxcdn:before {
+            content: "\f136"
+        }
+
+        .font-chevron-circle-left:before {
+            content: "\f137"
+        }
+
+        .font-chevron-circle-right:before {
+            content: "\f138"
+        }
+
+        .font-chevron-circle-up:before {
+            content: "\f139"
+        }
+
+        .font-chevron-circle-down:before {
+            content: "\f13a"
+        }
+
+        .font-html5:before {
+            content: "\f13b"
+        }
+
+        .font-css3:before {
+            content: "\f13c"
+        }
+
+        .font-anchor:before {
+            content: "\f13d"
+        }
+
+        .font-unlock-alt:before {
+            content: "\f13e"
+        }
+
+        .font-bullseye:before {
+            content: "\f140"
+        }
+
+        .font-ellipsis-h:before {
+            content: "\f141"
+        }
+
+        .font-ellipsis-v:before {
+            content: "\f142"
+        }
+
+        .font-rss-square:before {
+            content: "\f143"
+        }
+
+        .font-play-circle:before {
+            content: "\f144"
+        }
+
+        .font-ticket:before {
+            content: "\f145"
+        }
+
+        .font-minus-square:before {
+            content: "\f146"
+        }
+
+        .font-minus-square-o:before {
+            content: "\f147"
+        }
+
+        .font-level-up:before {
+            content: "\f148"
+        }
+
+        .font-level-down:before {
+            content: "\f149"
+        }
+
+        .font-check-square:before {
+            content: "\f14a"
+        }
+
+        .font-pencil-square:before {
+            content: "\f14b"
+        }
+
+        .font-external-link-square:before {
+            content: "\f14c"
+        }
+
+        .font-share-square:before {
+            content: "\f14d"
+        }
+
+        .font-compass:before {
+            content: "\f14e"
+        }
+
+        .font-toggle-down:before, .font-caret-square-o-down:before {
+            content: "\f150"
+        }
+
+        .font-toggle-up:before, .font-caret-square-o-up:before {
+            content: "\f151"
+        }
+
+        .font-toggle-right:before, .font-caret-square-o-right:before {
+            content: "\f152"
+        }
+
+        .font-euro:before, .font-eur:before {
+            content: "\f153"
+        }
+
+        .font-gbp:before {
+            content: "\f154"
+        }
+
+        .font-dollar:before, .font-usd:before {
+            content: "\f155"
+        }
+
+        .font-rupee:before, .font-inr:before {
+            content: "\f156"
+        }
+
+        .font-cny:before, .font-rmb:before, .font-yen:before, .font-jpy:before {
+            content: "\f157"
+        }
+
+        .font-ruble:before, .font-rouble:before, .font-rub:before {
+            content: "\f158"
+        }
+
+        .font-won:before, .font-krw:before {
+            content: "\f159"
+        }
+
+        .font-bitcoin:before, .font-btc:before {
+            content: "\f15a"
+        }
+
+        .font-file:before {
+            content: "\f15b"
+        }
+
+        .font-file-text:before {
+            content: "\f15c"
+        }
+
+        .font-sort-alpha-asc:before {
+            content: "\f15d"
+        }
+
+        .font-sort-alpha-desc:before {
+            content: "\f15e"
+        }
+
+        .font-sort-amount-asc:before {
+            content: "\f160"
+        }
+
+        .font-sort-amount-desc:before {
+            content: "\f161"
+        }
+
+        .font-sort-numeric-asc:before {
+            content: "\f162"
+        }
+
+        .font-sort-numeric-desc:before {
+            content: "\f163"
+        }
+
+        .font-thumbs-up:before {
+            content: "\f164"
+        }
+
+        .font-thumbs-down:before {
+            content: "\f165"
+        }
+
+        .font-youtube-square:before {
+            content: "\f166"
+        }
+
+        .font-youtube:before {
+            content: "\f167"
+        }
+
+        .font-xing:before {
+            content: "\f168"
+        }
+
+        .font-xing-square:before {
+            content: "\f169"
+        }
+
+        .font-youtube-play:before {
+            content: "\f16a"
+        }
+
+        .font-dropbox:before {
+            content: "\f16b"
+        }
+
+        .font-stack-overflow:before {
+            content: "\f16c"
+        }
+
+        .font-instagram:before {
+            content: "\f16d"
+        }
+
+        .font-flickr:before {
+            content: "\f16e"
+        }
+
+        .font-adn:before {
+            content: "\f170"
+        }
+
+        .font-bitbucket:before {
+            content: "\f171"
+        }
+
+        .font-bitbucket-square:before {
+            content: "\f172"
+        }
+
+        .font-tumblr:before {
+            content: "\f173"
+        }
+
+        .font-tumblr-square:before {
+            content: "\f174"
+        }
+
+        .font-long-arrow-down:before {
+            content: "\f175"
+        }
+
+        .font-long-arrow-up:before {
+            content: "\f176"
+        }
+
+        .font-long-arrow-left:before {
+            content: "\f177"
+        }
+
+        .font-long-arrow-right:before {
+            content: "\f178"
+        }
+
+        .font-apple:before {
+            content: "\f179"
+        }
+
+        .font-windows:before {
+            content: "\f17a"
+        }
+
+        .font-android:before {
+            content: "\f17b"
+        }
+
+        .font-linux:before {
+            content: "\f17c"
+        }
+
+        .font-dribbble:before {
+            content: "\f17d"
+        }
+
+        .font-skype:before {
+            content: "\f17e"
+        }
+
+        .font-foursquare:before {
+            content: "\f180"
+        }
+
+        .font-trello:before {
+            content: "\f181"
+        }
+
+        .font-female:before {
+            content: "\f182"
+        }
+
+        .font-male:before {
+            content: "\f183"
+        }
+
+        .font-gittip:before, .font-gratipay:before {
+            content: "\f184"
+        }
+
+        .font-sun-o:before {
+            content: "\f185"
+        }
+
+        .font-moon-o:before {
+            content: "\f186"
+        }
+
+        .font-archive:before {
+            content: "\f187"
+        }
+
+        .font-bug:before {
+            content: "\f188"
+        }
+
+        .font-vk:before {
+            content: "\f189"
+        }
+
+        .font-weibo:before {
+            content: "\f18a"
+        }
+
+        .font-renren:before {
+            content: "\f18b"
+        }
+
+        .font-pagelines:before {
+            content: "\f18c"
+        }
+
+        .font-stack-exchange:before {
+            content: "\f18d"
+        }
+
+        .font-arrow-circle-o-right:before {
+            content: "\f18e"
+        }
+
+        .font-arrow-circle-o-left:before {
+            content: "\f190"
+        }
+
+        .font-toggle-left:before, .font-caret-square-o-left:before {
+            content: "\f191"
+        }
+
+        .font-dot-circle-o:before {
+            content: "\f192"
+        }
+
+        .font-wheelchair:before {
+            content: "\f193"
+        }
+
+        .font-vimeo-square:before {
+            content: "\f194"
+        }
+
+        .font-turkish-lira:before, .font-try:before {
+            content: "\f195"
+        }
+
+        .font-plus-square-o:before {
+            content: "\f196"
+        }
+
+        .font-space-shuttle:before {
+            content: "\f197"
+        }
+
+        .font-slack:before {
+            content: "\f198"
+        }
+
+        .font-envelope-square:before {
+            content: "\f199"
+        }
+
+        .font-wordpress:before {
+            content: "\f19a"
+        }
+
+        .font-openid:before {
+            content: "\f19b"
+        }
+
+        .font-institution:before, .font-bank:before, .font-university:before {
+            content: "\f19c"
+        }
+
+        .font-mortar-board:before, .font-graduation-cap:before {
+            content: "\f19d"
+        }
+
+        .font-yahoo:before {
+            content: "\f19e"
+        }
+
+        .font-google:before {
+            content: "\f1a0"
+        }
+
+        .font-reddit:before {
+            content: "\f1a1"
+        }
+
+        .font-reddit-square:before {
+            content: "\f1a2"
+        }
+
+        .font-stumbleupon-circle:before {
+            content: "\f1a3"
+        }
+
+        .font-stumbleupon:before {
+            content: "\f1a4"
+        }
+
+        .font-delicious:before {
+            content: "\f1a5"
+        }
+
+        .font-digg:before {
+            content: "\f1a6"
+        }
+
+        .font-pied-piper-pp:before {
+            content: "\f1a7"
+        }
+
+        .font-pied-piper-alt:before {
+            content: "\f1a8"
+        }
+
+        .font-drupal:before {
+            content: "\f1a9"
+        }
+
+        .font-joomla:before {
+            content: "\f1aa"
+        }
+
+        .font-language:before {
+            content: "\f1ab"
+        }
+
+        .font-fontx:before {
+            content: "\f1ac"
+        }
+
+        .font-building:before {
+            content: "\f1ad"
+        }
+
+        .font-child:before {
+            content: "\f1ae"
+        }
+
+        .font-paw:before {
+            content: "\f1b0"
+        }
+
+        .font-spoon:before {
+            content: "\f1b1"
+        }
+
+        .font-cube:before {
+            content: "\f1b2"
+        }
+
+        .font-cubes:before {
+            content: "\f1b3"
+        }
+
+        .font-behance:before {
+            content: "\f1b4"
+        }
+
+        .font-behance-square:before {
+            content: "\f1b5"
+        }
+
+        .font-steam:before {
+            content: "\f1b6"
+        }
+
+        .font-steam-square:before {
+            content: "\f1b7"
+        }
+
+        .font-recycle:before {
+            content: "\f1b8"
+        }
+
+        .font-automobile:before, .font-car:before {
+            content: "\f1b9"
+        }
+
+        .font-cab:before, .font-taxi:before {
+            content: "\f1ba"
+        }
+
+        .font-tree:before {
+            content: "\f1bb"
+        }
+
+        .font-spotify:before {
+            content: "\f1bc"
+        }
+
+        .font-deviantart:before {
+            content: "\f1bd"
+        }
+
+        .font-soundcloud:before {
+            content: "\f1be"
+        }
+
+        .font-database:before {
+            content: "\f1c0"
+        }
+
+        .font-file-pdf-o:before {
+            content: "\f1c1"
+        }
+
+        .font-file-word-o:before {
+            content: "\f1c2"
+        }
+
+        .font-file-excel-o:before {
+            content: "\f1c3"
+        }
+
+        .font-file-powerpoint-o:before {
+            content: "\f1c4"
+        }
+
+        .font-file-photo-o:before, .font-file-picture-o:before, .font-file-image-o:before {
+            content: "\f1c5"
+        }
+
+        .font-file-zip-o:before, .font-file-archive-o:before {
+            content: "\f1c6"
+        }
+
+        .font-file-sound-o:before, .font-file-audio-o:before {
+            content: "\f1c7"
+        }
+
+        .font-file-movie-o:before, .font-file-video-o:before {
+            content: "\f1c8"
+        }
+
+        .font-file-code-o:before {
+            content: "\f1c9"
+        }
+
+        .font-vine:before {
+            content: "\f1ca"
+        }
+
+        .font-codepen:before {
+            content: "\f1cb"
+        }
+
+        .font-jsfiddle:before {
+            content: "\f1cc"
+        }
+
+        .font-life-bouy:before, .font-life-buoy:before, .font-life-saver:before, .font-support:before, .font-life-ring:before {
+            content: "\f1cd"
+        }
+
+        .font-circle-o-notch:before {
+            content: "\f1ce"
+        }
+
+        .font-ra:before, .font-resistance:before, .font-rebel:before {
+            content: "\f1d0"
+        }
+
+        .font-ge:before, .font-empire:before {
+            content: "\f1d1"
+        }
+
+        .font-git-square:before {
+            content: "\f1d2"
+        }
+
+        .font-git:before {
+            content: "\f1d3"
+        }
+
+        .font-y-combinator-square:before, .font-yc-square:before, .font-hacker-news:before {
+            content: "\f1d4"
+        }
+
+        .font-tencent-weibo:before {
+            content: "\f1d5"
+        }
+
+        .font-qq:before {
+            content: "\f1d6"
+        }
+
+        .font-wechat:before, .font-weixin:before {
+            content: "\f1d7"
+        }
+
+        .font-send:before, .font-paper-plane:before {
+            content: "\f1d8"
+        }
+
+        .font-send-o:before, .font-paper-plane-o:before {
+            content: "\f1d9"
+        }
+
+        .font-history:before {
+            content: "\f1da"
+        }
+
+        .font-circle-thin:before {
+            content: "\f1db"
+        }
+
+        .font-header:before {
+            content: "\f1dc"
+        }
+
+        .font-paragraph:before {
+            content: "\f1dd"
+        }
+
+        .font-sliders:before {
+            content: "\f1de"
+        }
+
+        .font-share-alt:before {
+            content: "\f1e0"
+        }
+
+        .font-share-alt-square:before {
+            content: "\f1e1"
+        }
+
+        .font-bomb:before {
+            content: "\f1e2"
+        }
+
+        .font-soccer-ball-o:before, .font-futbol-o:before {
+            content: "\f1e3"
+        }
+
+        .font-tty:before {
+            content: "\f1e4"
+        }
+
+        .font-binoculars:before {
+            content: "\f1e5"
+        }
+
+        .font-plug:before {
+            content: "\f1e6"
+        }
+
+        .font-slideshare:before {
+            content: "\f1e7"
+        }
+
+        .font-twitch:before {
+            content: "\f1e8"
+        }
+
+        .font-yelp:before {
+            content: "\f1e9"
+        }
+
+        .font-newspaper-o:before {
+            content: "\f1ea"
+        }
+
+        .font-wifi:before {
+            content: "\f1eb"
+        }
+
+        .font-calculator:before {
+            content: "\f1ec"
+        }
+
+        .font-paypal:before {
+            content: "\f1ed"
+        }
+
+        .font-google-wallet:before {
+            content: "\f1ee"
+        }
+
+        .font-cc-visa:before {
+            content: "\f1f0"
+        }
+
+        .font-cc-mastercard:before {
+            content: "\f1f1"
+        }
+
+        .font-cc-discover:before {
+            content: "\f1f2"
+        }
+
+        .font-cc-amex:before {
+            content: "\f1f3"
+        }
+
+        .font-cc-paypal:before {
+            content: "\f1f4"
+        }
+
+        .font-cc-stripe:before {
+            content: "\f1f5"
+        }
+
+        .font-bell-slash:before {
+            content: "\f1f6"
+        }
+
+        .font-bell-slash-o:before {
+            content: "\f1f7"
+        }
+
+        .font-trash:before {
+            content: "\f1f8"
+        }
+
+        .font-copyright:before {
+            content: "\f1f9"
+        }
+
+        .font-at:before {
+            content: "\f1font"
+        }
+
+        .font-eyedropper:before {
+            content: "\f1fb"
+        }
+
+        .font-paint-brush:before {
+            content: "\f1fc"
+        }
+
+        .font-birthday-cake:before {
+            content: "\f1fd"
+        }
+
+        .font-area-chart:before {
+            content: "\f1fe"
+        }
+
+        .font-pie-chart:before {
+            content: "\f200"
+        }
+
+        .font-line-chart:before {
+            content: "\f201"
+        }
+
+        .font-lastfm:before {
+            content: "\f202"
+        }
+
+        .font-lastfm-square:before {
+            content: "\f203"
+        }
+
+        .font-toggle-off:before {
+            content: "\f204"
+        }
+
+        .font-toggle-on:before {
+            content: "\f205"
+        }
+
+        .font-bicycle:before {
+            content: "\f206"
+        }
+
+        .font-bus:before {
+            content: "\f207"
+        }
+
+        .font-ioxhost:before {
+            content: "\f208"
+        }
+
+        .font-angellist:before {
+            content: "\f209"
+        }
+
+        .font-cc:before {
+            content: "\f20a"
+        }
+
+        .font-shekel:before, .font-sheqel:before, .font-ils:before {
+            content: "\f20b"
+        }
+
+        .font-meanpath:before {
+            content: "\f20c"
+        }
+
+        .font-buysellads:before {
+            content: "\f20d"
+        }
+
+        .font-connectdevelop:before {
+            content: "\f20e"
+        }
+
+        .font-dashcube:before {
+            content: "\f210"
+        }
+
+        .font-forumbee:before {
+            content: "\f211"
+        }
+
+        .font-leanpub:before {
+            content: "\f212"
+        }
+
+        .font-sellsy:before {
+            content: "\f213"
+        }
+
+        .font-shirtsinbulk:before {
+            content: "\f214"
+        }
+
+        .font-simplybuilt:before {
+            content: "\f215"
+        }
+
+        .font-skyatlas:before {
+            content: "\f216"
+        }
+
+        .font-cart-plus:before {
+            content: "\f217"
+        }
+
+        .font-cart-arrow-down:before {
+            content: "\f218"
+        }
+
+        .font-diamond:before {
+            content: "\f219"
+        }
+
+        .font-ship:before {
+            content: "\f21a"
+        }
+
+        .font-user-secret:before {
+            content: "\f21b"
+        }
+
+        .font-motorcycle:before {
+            content: "\f21c"
+        }
+
+        .font-street-view:before {
+            content: "\f21d"
+        }
+
+        .font-heartbeat:before {
+            content: "\f21e"
+        }
+
+        .font-venus:before {
+            content: "\f221"
+        }
+
+        .font-mars:before {
+            content: "\f222"
+        }
+
+        .font-mercury:before {
+            content: "\f223"
+        }
+
+        .font-intersex:before, .font-transgender:before {
+            content: "\f224"
+        }
+
+        .font-transgender-alt:before {
+            content: "\f225"
+        }
+
+        .font-venus-double:before {
+            content: "\f226"
+        }
+
+        .font-mars-double:before {
+            content: "\f227"
+        }
+
+        .font-venus-mars:before {
+            content: "\f228"
+        }
+
+        .font-mars-stroke:before {
+            content: "\f229"
+        }
+
+        .font-mars-stroke-v:before {
+            content: "\f22a"
+        }
+
+        .font-mars-stroke-h:before {
+            content: "\f22b"
+        }
+
+        .font-neuter:before {
+            content: "\f22c"
+        }
+
+        .font-genderless:before {
+            content: "\f22d"
+        }
+
+        .font-facebook-official:before {
+            content: "\f230"
+        }
+
+        .font-pinterest-p:before {
+            content: "\f231"
+        }
+
+        .font-whatsapp:before {
+            content: "\f232"
+        }
+
+        .font-server:before {
+            content: "\f233"
+        }
+
+        .font-user-plus:before {
+            content: "\f234"
+        }
+
+        .font-user-times:before {
+            content: "\f235"
+        }
+
+        .font-hotel:before, .font-bed:before {
+            content: "\f236"
+        }
+
+        .font-viacoin:before {
+            content: "\f237"
+        }
+
+        .font-train:before {
+            content: "\f238"
+        }
+
+        .font-subway:before {
+            content: "\f239"
+        }
+
+        .font-medium:before {
+            content: "\f23a"
+        }
+
+        .font-yc:before, .font-y-combinator:before {
+            content: "\f23b"
+        }
+
+        .font-optin-monster:before {
+            content: "\f23c"
+        }
+
+        .font-opencart:before {
+            content: "\f23d"
+        }
+
+        .font-expeditedssl:before {
+            content: "\f23e"
+        }
+
+        .font-battery-4:before, .font-battery:before, .font-battery-full:before {
+            content: "\f240"
+        }
+
+        .font-battery-3:before, .font-battery-three-quarters:before {
+            content: "\f241"
+        }
+
+        .font-battery-2:before, .font-battery-half:before {
+            content: "\f242"
+        }
+
+        .font-battery-1:before, .font-battery-quarter:before {
+            content: "\f243"
+        }
+
+        .font-battery-0:before, .font-battery-empty:before {
+            content: "\f244"
+        }
+
+        .font-mouse-pointer:before {
+            content: "\f245"
+        }
+
+        .font-i-cursor:before {
+            content: "\f246"
+        }
+
+        .font-object-group:before {
+            content: "\f247"
+        }
+
+        .font-object-ungroup:before {
+            content: "\f248"
+        }
+
+        .font-sticky-note:before {
+            content: "\f249"
+        }
+
+        .font-sticky-note-o:before {
+            content: "\f24a"
+        }
+
+        .font-cc-jcb:before {
+            content: "\f24b"
+        }
+
+        .font-cc-diners-club:before {
+            content: "\f24c"
+        }
+
+        .font-clone:before {
+            content: "\f24d"
+        }
+
+        .font-balance-scale:before {
+            content: "\f24e"
+        }
+
+        .font-hourglass-o:before {
+            content: "\f250"
+        }
+
+        .font-hourglass-1:before, .font-hourglass-start:before {
+            content: "\f251"
+        }
+
+        .font-hourglass-2:before, .font-hourglass-half:before {
+            content: "\f252"
+        }
+
+        .font-hourglass-3:before, .font-hourglass-end:before {
+            content: "\f253"
+        }
+
+        .font-hourglass:before {
+            content: "\f254"
+        }
+
+        .font-hand-grab-o:before, .font-hand-rock-o:before {
+            content: "\f255"
+        }
+
+        .font-hand-stop-o:before, .font-hand-paper-o:before {
+            content: "\f256"
+        }
+
+        .font-hand-scissors-o:before {
+            content: "\f257"
+        }
+
+        .font-hand-lizard-o:before {
+            content: "\f258"
+        }
+
+        .font-hand-spock-o:before {
+            content: "\f259"
+        }
+
+        .font-hand-pointer-o:before {
+            content: "\f25a"
+        }
+
+        .font-hand-peace-o:before {
+            content: "\f25b"
+        }
+
+        .font-trademark:before {
+            content: "\f25c"
+        }
+
+        .font-registered:before {
+            content: "\f25d"
+        }
+
+        .font-creative-commons:before {
+            content: "\f25e"
+        }
+
+        .font-gg:before {
+            content: "\f260"
+        }
+
+        .font-gg-circle:before {
+            content: "\f261"
+        }
+
+        .font-tripadvisor:before {
+            content: "\f262"
+        }
+
+        .font-odnoklassniki:before {
+            content: "\f263"
+        }
+
+        .font-odnoklassniki-square:before {
+            content: "\f264"
+        }
+
+        .font-get-pocket:before {
+            content: "\f265"
+        }
+
+        .font-wikipedia-w:before {
+            content: "\f266"
+        }
+
+        .font-safontri:before {
+            content: "\f267"
+        }
+
+        .font-chrome:before {
+            content: "\f268"
+        }
+
+        .font-firefox:before {
+            content: "\f269"
+        }
+
+        .font-opera:before {
+            content: "\f26a"
+        }
+
+        .font-internet-explorer:before {
+            content: "\f26b"
+        }
+
+        .font-tv:before, .font-television:before {
+            content: "\f26c"
+        }
+
+        .font-contao:before {
+            content: "\f26d"
+        }
+
+        .font-500px:before {
+            content: "\f26e"
+        }
+
+        .font-amazon:before {
+            content: "\f270"
+        }
+
+        .font-calendar-plus-o:before {
+            content: "\f271"
+        }
+
+        .font-calendar-minus-o:before {
+            content: "\f272"
+        }
+
+        .font-calendar-times-o:before {
+            content: "\f273"
+        }
+
+        .font-calendar-check-o:before {
+            content: "\f274"
+        }
+
+        .font-industry:before {
+            content: "\f275"
+        }
+
+        .font-map-pin:before {
+            content: "\f276"
+        }
+
+        .font-map-signs:before {
+            content: "\f277"
+        }
+
+        .font-map-o:before {
+            content: "\f278"
+        }
+
+        .font-map:before {
+            content: "\f279"
+        }
+
+        .font-commenting:before {
+            content: "\f27a"
+        }
+
+        .font-commenting-o:before {
+            content: "\f27b"
+        }
+
+        .font-houzz:before {
+            content: "\f27c"
+        }
+
+        .font-vimeo:before {
+            content: "\f27d"
+        }
+
+        .font-black-tie:before {
+            content: "\f27e"
+        }
+
+        .font-fonticons:before {
+            content: "\f280"
+        }
+
+        .font-reddit-alien:before {
+            content: "\f281"
+        }
+
+        .font-edge:before {
+            content: "\f282"
+        }
+
+        .font-credit-card-alt:before {
+            content: "\f283"
+        }
+
+        .font-codiepie:before {
+            content: "\f284"
+        }
+
+        .font-modx:before {
+            content: "\f285"
+        }
+
+        .font-fort-awesome:before {
+            content: "\f286"
+        }
+
+        .font-usb:before {
+            content: "\f287"
+        }
+
+        .font-product-hunt:before {
+            content: "\f288"
+        }
+
+        .font-mixcloud:before {
+            content: "\f289"
+        }
+
+        .font-scribd:before {
+            content: "\f28a"
+        }
+
+        .font-pause-circle:before {
+            content: "\f28b"
+        }
+
+        .font-pause-circle-o:before {
+            content: "\f28c"
+        }
+
+        .font-stop-circle:before {
+            content: "\f28d"
+        }
+
+        .font-stop-circle-o:before {
+            content: "\f28e"
+        }
+
+        .font-shopping-bag:before {
+            content: "\f290"
+        }
+
+        .font-shopping-basket:before {
+            content: "\f291"
+        }
+
+        .font-hashtag:before {
+            content: "\f292"
+        }
+
+        .font-bluetooth:before {
+            content: "\f293"
+        }
+
+        .font-bluetooth-b:before {
+            content: "\f294"
+        }
+
+        .font-percent:before {
+            content: "\f295"
+        }
+
+        .font-gitlab:before {
+            content: "\f296"
+        }
+
+        .font-wpbeginner:before {
+            content: "\f297"
+        }
+
+        .font-wpforms:before {
+            content: "\f298"
+        }
+
+        .font-envira:before {
+            content: "\f299"
+        }
+
+        .font-universal-access:before {
+            content: "\f29a"
+        }
+
+        .font-wheelchair-alt:before {
+            content: "\f29b"
+        }
+
+        .font-question-circle-o:before {
+            content: "\f29c"
+        }
+
+        .font-blind:before {
+            content: "\f29d"
+        }
+
+        .font-audio-description:before {
+            content: "\f29e"
+        }
+
+        .font-volume-control-phone:before {
+            content: "\f2a0"
+        }
+
+        .font-braille:before {
+            content: "\f2a1"
+        }
+
+        .font-assistive-listening-systems:before {
+            content: "\f2a2"
+        }
+
+        .font-asl-interpreting:before, .font-american-sign-language-interpreting:before {
+            content: "\f2a3"
+        }
+
+        .font-deafness:before, .font-hard-of-hearing:before, .font-deaf:before {
+            content: "\f2a4"
+        }
+
+        .font-glide:before {
+            content: "\f2a5"
+        }
+
+        .font-glide-g:before {
+            content: "\f2a6"
+        }
+
+        .font-signing:before, .font-sign-language:before {
+            content: "\f2a7"
+        }
+
+        .font-low-vision:before {
+            content: "\f2a8"
+        }
+
+        .font-viadeo:before {
+            content: "\f2a9"
+        }
+
+        .font-viadeo-square:before {
+            content: "\f2aa"
+        }
+
+        .font-snapchat:before {
+            content: "\f2ab"
+        }
+
+        .font-snapchat-ghost:before {
+            content: "\f2ac"
+        }
+
+        .font-snapchat-square:before {
+            content: "\f2ad"
+        }
+
+        .font-pied-piper:before {
+            content: "\f2ae"
+        }
+
+        .font-first-order:before {
+            content: "\f2b0"
+        }
+
+        .font-yoast:before {
+            content: "\f2b1"
+        }
+
+        .font-themeisle:before {
+            content: "\f2b2"
+        }
+
+        .font-google-plus-circle:before, .font-google-plus-official:before {
+            content: "\f2b3"
+        }
+
+        .font-font:before, .font-font-awesome:before {
+            content: "\f2b4"
+        }
+
+        .font-handshake-o:before {
+            content: "\f2b5"
+        }
+
+        .font-envelope-open:before {
+            content: "\f2b6"
+        }
+
+        .font-envelope-open-o:before {
+            content: "\f2b7"
+        }
+
+        .font-linode:before {
+            content: "\f2b8"
+        }
+
+        .font-address-book:before {
+            content: "\f2b9"
+        }
+
+        .font-address-book-o:before {
+            content: "\f2ba"
+        }
+
+        .font-vcard:before, .font-address-card:before {
+            content: "\f2bb"
+        }
+
+        .font-vcard-o:before, .font-address-card-o:before {
+            content: "\f2bc"
+        }
+
+        .font-user-circle:before {
+            content: "\f2bd"
+        }
+
+        .font-user-circle-o:before {
+            content: "\f2be"
+        }
+
+        .font-user-o:before {
+            content: "\f2c0"
+        }
+
+        .font-id-badge:before {
+            content: "\f2c1"
+        }
+
+        .font-drivers-license:before, .font-id-card:before {
+            content: "\f2c2"
+        }
+
+        .font-drivers-license-o:before, .font-id-card-o:before {
+            content: "\f2c3"
+        }
+
+        .font-quora:before {
+            content: "\f2c4"
+        }
+
+        .font-free-code-camp:before {
+            content: "\f2c5"
+        }
+
+        .font-telegram:before {
+            content: "\f2c6"
+        }
+
+        .font-thermometer-4:before, .font-thermometer:before, .font-thermometer-full:before {
+            content: "\f2c7"
+        }
+
+        .font-thermometer-3:before, .font-thermometer-three-quarters:before {
+            content: "\f2c8"
+        }
+
+        .font-thermometer-2:before, .font-thermometer-half:before {
+            content: "\f2c9"
+        }
+
+        .font-thermometer-1:before, .font-thermometer-quarter:before {
+            content: "\f2ca"
+        }
+
+        .font-thermometer-0:before, .font-thermometer-empty:before {
+            content: "\f2cb"
+        }
+
+        .font-shower:before {
+            content: "\f2cc"
+        }
+
+        .font-bathtub:before, .font-s15:before, .font-bath:before {
+            content: "\f2cd"
+        }
+
+        .font-podcast:before {
+            content: "\f2ce"
+        }
+
+        .font-window-maximize:before {
+            content: "\f2d0"
+        }
+
+        .font-window-minimize:before {
+            content: "\f2d1"
+        }
+
+        .font-window-restore:before {
+            content: "\f2d2"
+        }
+
+        .font-times-rectangle:before, .font-window-close:before {
+            content: "\f2d3"
+        }
+
+        .font-times-rectangle-o:before, .font-window-close-o:before {
+            content: "\f2d4"
+        }
+
+        .font-bandcamp:before {
+            content: "\f2d5"
+        }
+
+        .font-grav:before {
+            content: "\f2d6"
+        }
+
+        .font-etsy:before {
+            content: "\f2d7"
+        }
+
+        .font-imdb:before {
+            content: "\f2d8"
+        }
+
+        .font-ravelry:before {
+            content: "\f2d9"
+        }
+
+        .font-eercast:before {
+            content: "\f2da"
+        }
+
+        .font-microchip:before {
+            content: "\f2db"
+        }
+
+        .font-snowflake-o:before {
+            content: "\f2dc"
+        }
+
+        .font-superpowers:before {
+            content: "\f2dd"
+        }
+
+        .font-wpexplorer:before {
+            content: "\f2de"
+        }
+
+        .font-meetup:before {
+            content: "\f2e0"
+        }
+        /* end-font-icon */
+    </style>
+    <style>
+        /* navigation */
+        .navbar-light .navbar-nav .nav-link.active {
+            color: orangered !important;
+            font: bold;
+        }
+        /* /navigation */
+
+        .form-popup select, .form-popup input {
+            height: 53.35px;
+        }
+    </style>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        /* login */
+        #login {
+            height: 360px;
+            width: 300px;
+            border: 1px solid black;
+            padding: 8px;
+        }
+
+            #login input, #login select {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+
+            #login button {
+                width: 50%;
+                float: left;
+                border: none;
+                padding: 8px;
+                color: white;
+            }
+
+            #login .btn-cancel {
+                background: red;
+            }
+
+            #login .btn-login {
+                background: blue;
+            }
+
+            #login a {
+                display: block
+            }
+        /* end-login */
+
+        /* layout */
+        .cont, .row1, .row2, .col1, .col2 {
+            height: 625px;
+            border: 1px solid #dee2e6;
+            box-shadow: 0 0.25rem 0.75rem rgb(0 0 0 / 12%);
+        }
+
+        .cont {
+            width: 80%;
+            margin: auto;
+            padding: 5px;
+        }
+
+        .row1 {
+            height: 100px;
+        }
+
+        .row2 {
+            height: 519px;
+            padding: 10px;
+            margin: 0px -10px;
+        }
+
+        .col1, .col2 {
+            padding: 5px;
+            height: 500px;
+            float: left;
+            width: 0%;
+        }
+
+        .col2 {
+            width: 100%;
+        }
+
+        .frame1 a, .col1 a {
+            margin-right: 10px;
+            display: inline-block;
+            text-align: center;
+            padding: 10px;
+            text-decoration: none;
+            background: yellowgreen;
+            color: white;
+        }
+
+        .frame1 {
+        }
+
+        .col1 a {
+            display: block;
+            border: 1px solid black;
+            text-align: left;
+        }
+
+        .col1 i {
+            float: right;
+        }
+
+        .dropdown {
+        }
+
+            .dropdown a {
+                text-align: right;
+            }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(11,1fr);
+            background: #2196f3;
+            padding: 10px;
+        }
+
+        .grid-item {
+            border: 1px solid black;
+        }
+
+        .attribute-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(var(--column-width-min), 1fr));
+        }
+
+        .part-id {
+            --column-width-min: 10em;
+        }
+        /* end-layout */
+
+        /* table to be col-resized with text hidden*/
+        table {
+            width: 100%;
+            font-family: sans-serif;
+            font-weight: bold;
+        }
+
+        table, th, td {
+            border: 1px solid #000;
+        }
+
+        .container {
+            position: relative;
+        }
+
+        .content {
+            position: absolute;
+            max-width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .spacer {
+            height: 0;
+            overflow: hidden;
+        }
+
+        .fixed {
+            text-align: center;
+        }
+        /* end-table to be col-resized with text hidden*/
+
+
+    </style>
+    <style>
+        /* popup form */
+        .form-popup {
+            z-index: 1;
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding-top: 100px;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.3);
+            overflow: auto;
+        }
+
+            .form-popup .f-signup {
+                margin: auto;
+                padding: 16px;
+                width: 1000px;
+                height: 500px;
+                background-color: #fefefe;
+                overflow: hidden;
+                border: 3px solid white;
+            }
+
+            .form-popup #form_delete {
+                width: 300px;
+                height: 150px;
+            }
+
+        .input_container {
+            overflow: hidden;
+        }
+
+        .form-popup input, .form-popup select {
+            width: 100%;
+            padding: 15px;
+            margin: 5px 0 22px 0;
+            border: none;
+            border-left: 3px solid white;
+            background-color: #f1f1f1;
+        }
+
+        .form-popup label {
+            float: left;
+            width: 50%;
+        }
+
+        .form-popup input:focus, .form-popup select:focus {
+            background-color: #ddd;
+            outline: none;
+        }
+
+        .form-popup button {
+            cursor: pointer;
+            padding: 15px;
+            width: 100%;
+            border: none;
+            color: white;
+            background-color: red;
+            opacity: 0.8;
+        }
+
+        .form-popup .btn {
+            float: left;
+            width: 50%;
+        }
+
+        .form-popup .btn-signup {
+            background-color: lightseagreen;
+        }
+
+        .form-popup .btn:hover {
+            opacity: 1;
+        }
+        /* end-popup form */
+    </style>
+</head>
+<body>
+    <header>
+        <nav id="import" class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" href="/Index">PTTKPM</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item"><a class="nav-link text-dark active" href="/Index">Home</a></li>
+                        @*<li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a></li>*@
+                        @if (string.IsNullOrEmpty(email))
+                        {
+                            <li class="nav-item"><a class="nav-link text-dark" href="/MH_DangNhap_SoGiaoThong">Sở giao thông</a></li>
+                            <li class="nav-item"><a class="nav-link text-dark" href="/MH_DangNhap_CongTyTDN">Công ty Tàu điện ngầm</a></li>
+                        }
+                        else
+                        {
+                            if (PhanLoai == "SoGiaoThong")
+                            {
+                                <li class="nav-item"><a class="nav-link text-dark" href="/MH_CongTyTauDienNgam">Công ty Tàu điện ngầm</a></li>
+                                <li class="nav-item"><a class="nav-link text-dark" href="/MH_Ga">Ga</a></li>
+                                @if (QuanTriHeThong == "1")
+                                {
+                                    <li class="nav-item"><a class="nav-link text-dark" href="/MH_NguoiDung">Người dùng</a></li>
+                                }
+                            }
+                            else if (PhanLoai == "CongTyTDN")
+                            {
+                                <li class="nav-item"><a class="nav-link text-dark" href="/MH_TuyenTau">Tuyến tàu</a></li>
+                                <li class="nav-item"><a class="nav-link text-dark" href="/MH_Ve">Vé</a></li>
+                                <li class="nav-item submenu dropdown">
+                                    <a href="/MH_Ve" class="nav-link dropdown-toggle text-dark" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"></a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item"><a class="nav-link text-dark" href="/MH_VeThang">Vé tháng</a></li>
+                                        <li class="nav-item"><a class="nav-link text-dark" href="/MH_VeThuong">Vé thường</a></li>
+                                        <li class="nav-item"><a class="nav-link text-dark" href="/MH_LichSuSuDung">Lịch sử sử dụng</a></li>
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item"><a class="nav-link text-dark" href="/MH_TuyenTau_GaTrungGian">TuyếnTàu-Ga Trung Gian</a></li>
+                                @if (QuanTriHeThong == "1")
+                                {
+                                    <li class="nav-item"><a class="nav-link text-dark" href="/MH_NguoiDung">Người dùng</a></li>
+                                }
+                            }
+                            @if (QuanTriHeThong == "1")
+                            {
+                                <li class="nav-item" style="float: left"><a class="nav-link text-dark">Xin chào @email - @PhanLoai - Admin </a></li>
+                            }
+                            else
+                            {
+                                <li class="nav-item" style="float: left"><a class="nav-link text-dark">Xin chào @email - @PhanLoai</a></li>
+                            }
+
+                        }
+
+                    </ul>
+
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2021 - PTTKPM - <a asp-area="" asp-page="/Privacy">Privacy</a>
+        </div>
+    </footer>
+
+    @section Scripts{
+
+    }
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/bootstrap-datetimepicker.min.js"></script>
+    <script src="~/bootstrap-datetimepicker.js"></script>
+    <script src="~/jquery-ui.min.js"></script>
+
+    <script src="~/jquery-3.3.1.min.js"></script>
+    <script src="~/jquery-ui.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/3.0.0/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
+
+
+    <script type="text/javascript">
+        $(function () {
+            $('#datetimepicker1').datetimepicker();
+        });
+    </script>
+
+
+
+
+    @*đổi màu active nav-link*@
+    <script>
+        $(document).ready(function () {
+            //$(".nav-link").click(function () {
+            //    $(".nav-link").removeClass("active");
+            //    $(this).addClass("active");
+            //});
+            var current = "/" + location.pathname.split('/')[1]
+            $(".nav-link").each(function () {
+                if ($(this).attr("href") == current) { $(this).addClass("active"); }
+                else { $(this).removeClass("active"); }
+            })
+        })
+
+    </script>
+
+
+    <script>
+        function themNguoiDung() {
+            var formData = {
+                email: $('email').val(),
+                password: $('password').val(),
+                PhanLoai: $('PhanLoai').val(),
+                ThoiGian: Date.now(),  //sửa lại
+                MaSoCongTyTDN: $('MaSoCongTyTDN').val(),
+            }
+            $.ajax({
+                url: '/MH_NguoiDung/api',
+                type: 'POST',
+                data: formData,
+                success: function (result) {
+
+                }
+            })
+        }
+
+    </script>
+
+
+
+
+
+    @*layout*@
+    <script>
+        function fn() {
+            var name = 'font font-angle-down'
+            var dropdown = document.getElementById('dropdown1')
+            var angle = document.getElementById('angle')
+
+            var angleStr = angle.getAttribute('class')
+            var angleArr = classStr.split(' ')
+            var nameArr = name.split(' ')
+
+            if (dropdown.style.display == 'none') {
+                dropdown.style.display = 'block'
+                for (var i = 0; i < nameArr.length; i++)
+                    if (angleArr.indexOf(nameArr[i]) == -1) //nếu angleClass không chứa từ font or font-angle-down, add từ đó vào class của angle
+                        angle.className = angleArr[i]
+            }
+            else {
+                dropdown.style.display = 'none'
+                angle.classList.toggle()
+            }
+        }
+    </script>
+
+    @*col-resize*@
+    <script>
+        //create Column Resize
+        var tables = document.getElementsByTagName('table')
+        for (var i = 0; i < tables.length; i++) { resizableGrid(tables[i]) }
+
+        function resizableGrid(table) {//retrieves the very first row of the table
+            var row = table.getElementsByTagName('tr')[0]
+            var cols = row ? row.children : undefined  //store all td elements to cols variable using row.children
+            if (!cols) return
+
+            //table.style.overflow = 'hidden'
+
+            for (var i = 0; i < cols.length; i++) {
+                var div = createDiv(table.offsetHeight) //createDiv function-create column resizer handle
+                cols[i].appendChild(div)
+                cols[i].style.position = 'relative'
+                setListeners(div)                //setListeners function
+            }
+
+            function createDiv(height) { //create column resizer handle
+                var div = document.createElement('div')
+                div.style.top = 0
+                div.style.right = 0
+                div.style.width = '5px'
+                div.style.position = 'absolute'
+                div.style.cursor = 'col-resize'
+                // div.style.background = 'red'
+                div.style.userSelect = 'none'
+                div.style.height = height + 'px'
+                div.className = 'columnSelector'
+                return div
+            }
+
+            function setListeners(div) {
+                var pageX, curCol, nxtCol, curColWidth, nxtColWidth
+                div.addEventListener('mousedown', function (e) {
+                    curCol = e.target.parentElement
+                    nxtCol = curCol.nextElementSibling
+                    console.log(curCol)
+                    pageX = e.pageX
+                    curColWidth = curCol.offsetWidth
+                    if (nxtCol) { nxtColWidth = nxtCol.offsetWidth }
+                })
+                document.addEventListener('mouseover', function (e) {
+                    if (curCol) {
+                        var diffX = e.pageX - pageX
+                        if (nxtCol) { nxtCol.style.width = (nxtColWidth - (diffX)) + 'px' }
+                        curCol.style.width = (curColWidth + diffX) + 'px'
+                    }
+                })
+                document.addEventListener('mouseup', function (e) {
+                    curCol = undefined
+                    nxtCol = undefined
+                    pageX = undefined
+                    nxtColWidth = undefined
+                    curColWidth = undefined
+                })
+            }
+        }
+
+
+    </script>
+
+    @*popup form*@
+    <script>
+        var modalCreate = document.getElementById('form-popup2')
+        var modalUpdate = document.getElementById('form-popup3')
+        var modalDelete = document.getElementById('form-popup4')
+
+        var indexUpdate = window.location.href.indexOf("update?Id=")
+        var indexDelete = window.location.href.indexOf("delete?Id=")
+
+        var url = window.location.href
+        //... Modal hidden & URL loaded without query param ... if click on element wrapping form
+        window.onclick = function (event) {
+            if (event.target == modalCreate) { modalCreate.style.display = 'none' }
+            else if (event.target == modalUpdate) { modalUpdate.style.display = 'none'; window.location.href = url.split("/update?Id=")[0]; }
+            else if (event.target == modalDelete) { modalDelete.style.display = 'none'; window.location.href = url.split("/delete?Id=")[0]; }
+        }   
+
+        //... Modal pop-ups ... if query param is added to URL
+        if (indexUpdate > -1) { modalUpdate.style.display = 'block' }
+        else if (indexDelete > -1) { modalDelete.style.display = 'block' }
+        //... URL loaded without query param ... if click button CANCEL
+
+        //var cancel = document.querySelectorAll(".cancel-btn");
+        //for (var i = 0; i < cancel.length; i++) {
+        //    cancel[i].addEventListener("click", function (event) {
+        //        modalUpdate.style.display = 'none'; window.location.href = url.split("/update?Id=")[0];
+                
+        //    }, false);
+        //}
+        function cancel() {
+            modalUpdate.style.display = 'none'; /*window.location.href = url.split("/update?Id=")[0];*/
+            modalDelete.style.display = 'none'; /*window.location.href = url.split("/delete?Id=")[0];*/
+        }
+        
+    </script>
+
+
+
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

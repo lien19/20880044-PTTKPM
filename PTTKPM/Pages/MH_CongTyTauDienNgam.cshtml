@@ -1,0 +1,166 @@
+﻿@page "{handler?}/{Id?}"
+@model PTTKPM.Pages.MH_CongTyTauDienNgamModel
+@{
+    List<string> colHeader = new List<string>() { "Id", "Mã số công ty", "Tên công ty", "Địa chỉ", "Website", "Số điện thoại" };
+    var chuoi2 = string.Empty;
+}
+
+
+
+<!--****************************** Start-Body Popup Form - Modal ******************************-->
+<div id="search">
+    <form asp-page-handler="search" method="post">
+        <input type="text" name="keyword" value="@Model.keyword">
+        <button type="submit" class="btn-search">Tìm kiếm</button>
+    </form>
+</div>
+<div id="a"></div>
+<!--****************************** End-Body Popup Form - Modal ******************************-->
+<div class="alert" style="background: yellow; width:max-content; float: right; cursor:pointer; color: red" id="quayLai">
+    <a href="/MH_CongTyTauDienNgam">@Model.chuoi  </a>
+    <span class="closebtn" onclick="this.parentElement.style.display='none';" style="font-size:22px">&times;</span>
+</div>
+
+<div style="color:#0366d6; cursor:pointer" onclick="document.getElementById('form-popup2').style.display='block'"><b>Tạo mới</b></div>
+
+<!--****************************** Start-Body Popup Form - Modal ******************************-->
+<div class="col2" style="overflow:scroll;">
+    <table>
+        <tr>
+            <th></th>
+            @foreach (var item in colHeader)
+            {
+                <th><div style="text-align:center; ">@item</div></th>
+}
+        </tr>
+        @if (Model.danhsach != null)
+        {
+            @foreach (var item in Model.danhsach)
+            {
+                <tr>
+                    <td><div class="fixed"><div class=""><input type="checkbox" name="ck" id=""></div></div></td>
+                    <td>
+                        <div class="container">
+                            <div class="content">@item.Id</div>
+                            <div class="spacer">@item.Id</div>
+                            <span>&nbsp;</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="container">
+                            <div class="content">@item.MaSoCongTyTDN</div>
+                            <div class="spacer">@item.MaSoCongTyTDN</div>
+                            <span>&nbsp;</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="container">
+                            <div class="content">@item.TenCongTyTDN</div>
+                            <div class="spacer">@item.TenCongTyTDN</div>
+                            <span>&nbsp;</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="container">
+                            <div class="content">@item.DiaChiCongTyTDN</div>
+                            <div class="spacer">@item.DiaChiCongTyTDN</div>
+                            <span>&nbsp;</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="container">
+                            <div class="content">@item.Website</div>
+                            <div class="spacer">@item.Website</div>
+                            <span>&nbsp;</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="container">
+                            <div class="content">@item.SoDienThoai</div>
+                            <div class="spacer">@item.SoDienThoai</div>
+                            <span>&nbsp;</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="container" style="display:flex; align-items:center;">
+                            <div class="content">
+                                <a href="/MH_CongTyTauDienNgam/update?Id=@item.Id">Sửa</a>
+                                @if (Model.QuanTriHeThong_session == "1")
+                                {<span> | </span><a href="/MH_CongTyTauDienNgam/delete?Id=@item.Id"> Xóa </a>}
+                            </div>
+                            <div class="spacer"><a href="#">Sửa</a> | <a href="#">Xóa</a></div>
+                            <span>&nbsp;</span>
+                        </div>
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+
+</div>
+
+<!--****************************** End-Body Popup Form - Modal ******************************-->
+<!--****************************** Start-CREATE Popup Form - Modal ******************************-->
+<div class="form-popup" id="form-popup2">
+    <form asp-page-handler="create" class="f-signup" method="post">
+        <h1>Thêm mới Công ty tàu điện ngầm</h1>
+        <div class="input_container">
+            <label for="MaSoCongTyTDN"><b>Mã số công ty</b><input type="text" id="MaSoCongTyTDN" name="MaSoCongTyTDN" value="@Model.MaSoCongTyTDN" placeholder="Mã số công ty" minlength="" maxlength="50" required></label>
+            <label for="TenCongTyTDN"><b>Tên công ty</b><input type="text" name="TenCongTyTDN" value="@Model.TenCongTyTDN" placeholder="Tên công ty" minlength="" maxlength="50" required></label>
+            <label for="DiaChiCongTyTDN"><b>Địa chỉ</b><input type="text" name="DiaChiCongTyTDN" value="@Model.DiaChiCongTyTDN" placeholder="Địa chỉ" minlength="" maxlength="50" required></label>
+            <label for="Website"><b>Website</b><input type="text" name="Website" value="@Model.Website" placeholder="Website" minlength="" maxlength="50" required></label>
+            <label for="SoDienThoai"><b>Số điện thoại</b><input type="text" name="SoDienThoai" value="@Model.SoDienThoai" placeholder="Số điện thoại" minlength="" maxlength="50" required></label>
+        </div>
+
+        <button type="button" class="btn" onclick="document.getElementById('form-popup2').style.display='none'">Hủy</button>
+        <button type="submit" class="btn btn-signup">Thêm</button>
+    </form>
+</div>
+<!--****************************** End-CREATE Popup Form ******************************-->
+<!--****************************** Start-UPDATE Popup Form - Modal ******************************-->
+<div class="form-popup" id="form-popup3">
+    <form asp-page-handler="update" class="f-signup" method="post" id="form_update" asp-route-id="@Model.Id">
+        <h1>Cập nhật Công ty tàu điện ngầm</h1>
+        <div class="input_container">
+            <label for="MaSoCongTyTDN"><b>Mã số công ty</b><input type="text" id="MaSoCongTyTDN" name="MaSoCongTyTDN" value="@Model.MaSoCongTyTDN" placeholder="Mã số công ty" minlength="" maxlength="50" readonly></label>
+            <label for="TenCongTyTDN"><b>Tên công ty</b><input type="text" name="TenCongTyTDN" value="@Model.TenCongTyTDN" placeholder="Tên công ty" minlength="" maxlength="50" required></label>
+            <label for="DiaChiCongTyTDN"><b>Địa chỉ</b><input type="text" name="DiaChiCongTyTDN" value="@Model.DiaChiCongTyTDN" placeholder="Địa chỉ" minlength="" maxlength="50" required></label>
+            <label for="Website"><b>Website</b><input type="text" name="Website" value="@Model.Website" placeholder="Website" minlength="" maxlength="50" required></label>
+            <label for="SoDienThoai"><b>Số điện thoại</b><input type="text" name="SoDienThoai" value="@Model.SoDienThoai" placeholder="Số điện thoại" minlength="" maxlength="50" required></label>
+        </div>
+
+        <button type="button" class="btn" onclick="cancel()">Hủy</button>
+        <button type="submit" class="btn btn-signup">Cập nhật</button>
+    </form>
+</div>
+<!--****************************** End-UPDATE Popup Form ******************************-->
+<!--****************************** Start-DELETE Popup Form - Modal ******************************-->
+<div class="form-popup" id="form-popup4">
+    <form asp-page-handler="delete" class="f-signup" method="post" id="form_delete" asp-route-id="@Model.Id">
+        <p>Vui lòng xác nhận bạn muốn xóa mã @Model.MaSoCongTyTDN bằng cách nhấn nút Xóa.</p>
+
+        <button type="button" class="btn" onclick="cancel()">Hủy</button>
+        <button type="submit" class="btn btn-signup">Xóa</button>
+    </form>
+</div>
+<!--****************************** End-DELETE Popup Form ******************************-->
+
+
+
+
+<script>
+    //var newUrl = url.substring(0, url.indexOf("/update?Id="))
+
+    @*var data = JSON.parse('@Html.Raw(Model.danhsach)');
+    //var data = JSON.stringify(@Json.Serialize(Model.danhsach))
+        document.getElementById("message").innerHTML = data
+    function daTonTai() {
+
+        for (var i = 0; i < data.length; i++) {
+            if (data[i].MaSoCongTyTDN == parseInt(document.getElementById("MaSoCongTyTDN").value)) {
+                document.getElementById("message").innerHTML = "Mã này đã được dùng";
+            }
+        }
+    }*@
+</script>
+

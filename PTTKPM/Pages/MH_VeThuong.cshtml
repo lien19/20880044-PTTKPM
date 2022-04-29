@@ -1,0 +1,146 @@
+﻿@page "{handler?}/{Id?}"
+@model PTTKPM.Pages.MH_VeThuongModel
+@{
+    List<string> colHeader = new List<string>() { "Id", "Mã số vé thường", "Trạng thái sử dụng", "Thời điểm sử dụng"};
+
+}
+
+<!--****************************** Start-Body Popup Form - Modal ******************************-->
+<div id="search">
+    <form asp-page-handler="search" method="post">
+        <input type="text" name="keyword" value="@Model.keyword">
+        <button type="submit" class="btn-search">Tìm kiếm</button>
+    </form>
+</div> 
+<!--****************************** End-Body Popup Form - Modal ******************************-->
+<div class="alert" style="background: yellow; width:max-content; float: right; cursor:pointer; color: red" id="quayLai">
+    <a href="/MH_VeThuong">@Model.chuoi  </a>
+    <span class="closebtn" onclick="this.parentElement.style.display='none';" style="font-size:22px">&times;</span>
+</div>
+
+<div style="color:#0366d6; cursor:pointer" onclick="document.getElementById('form-popup2').style.display='block'"><b>Tạo mới</b></div>
+
+<!--****************************** Start-Body Popup Form - Modal ******************************-->
+<div class="col2" style="overflow:scroll;">
+    <table>
+        <tr>
+            <th></th>
+            @foreach (var item in colHeader) { <th><div style="text-align:center; ">@item</div></th> }
+        </tr>
+        @if (Model.danhsach != null)
+        {
+            @foreach (var item in Model.danhsach)
+            {
+                <tr>
+                    <td><div class="fixed"><div class=""><input type="checkbox" name="ck" id=""></div></div></td>
+                    <td>
+                        <div class="container">
+                            <div class="content">@item.Id</div>
+                            <div class="spacer">@item.Id</div>
+                            <span>&nbsp;</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="container">
+                            <div class="content">@item.VeId</div>
+                            <div class="spacer">@item.VeId</div>
+                            <span>&nbsp;</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="container">
+                            <div class="content">@item.TrangThaiSuDung</div>
+                            <div class="spacer">@item.TrangThaiSuDung</div>
+                            <span>&nbsp;</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="container">
+                            <div class="content">@item.ThoiDiemSuDung</div>
+                            <div class="spacer">@item.ThoiDiemSuDung</div>
+                            <span>&nbsp;</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="container">
+                            <div class="content">
+                                <a href="/MH_VeThuong/update?Id=@item.Id">Sửa</a>
+                                @if (Model.QuanTriHeThong_session == "1")
+                                {<span> | </span><a href="/MH_VeThuong/delete?Id=@item.Id"> Xóa </a>}
+                            </div>
+                            <div class="spacer"><a href="#">Sửa</a> <a href="#">Xóa</a></div>
+                            <span>&nbsp;</span>
+                        </div>
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+</div>
+<!--****************************** End-Body Popup Form - Modal ******************************-->
+<!--****************************** Start-CREATE Popup Form - Modal ******************************-->
+<div class="form-popup" id="form-popup2">
+    <form asp-page-handler="create" class="f-signup" method="post">
+        <h1>Thêm mới Vé thường</h1>
+        <div class="input_container">
+            <label for="VeId"><b>Mã số Vé thường</b>
+                <select name="VeId" required>
+                    <option value=""> </option>
+                    @if (Model.DS_Ve != null) { foreach (var Ve in Model.DS_Ve) { <option value="@Ve.Id"> @Ve.Id </option> }}
+                </select></label>            
+            <label for="TrangThaiSuDung"><b>Trạng thái sử dụng</b><input type="datetime" name="TrangThaiSuDung" value="@Model.TrangThaiSuDung" placeholder="Trạng thái sử dụng" min="" max="" required readonly></label>
+            <label for="ThoiDiemSuDung"><b>Thời điểm sử dụng</b><input type="datetime" name="ThoiDiemSuDung" value="@Model.ThoiDiemSuDung" placeholder="Thời điểm sử dụng" min="" max="" required></label>
+        </div>
+
+        <button type="button" class="btn" onclick="document.getElementById('form-popup2').style.display='none'">Hủy</button>
+        <button type="submit" class="btn btn-signup">Thêm</button>
+    </form>
+</div>
+<!--****************************** End-CREATE Popup Form ******************************-->
+<!--****************************** Start-UPDATE Popup Form - Modal ******************************-->
+<div class="form-popup" id="form-popup3">
+    <form asp-page-handler="update" class="f-signup" method="post" id="form_update" asp-route-id="@Model.Id">
+        <h1>Cập nhật Vé thường</h1>
+        <div class="input_container">
+            <label for="VeId"><b>Mã số Vé thường</b>
+                <select name="VeId" required>
+                    <option value="" disabled> </option>
+                    <option value="@Model.VeId" selected> @Model.VeId </option>
+                    @if (Model.DS_Ve != null)
+                    {
+                        foreach (var item in Model.DS_Ve)
+                        {
+                            if (@item.Id != @Model.VeId) { <option value="@item.Id"> @item.Id </option> }
+                            else { <option value="@Model.VeId" selected> @item.Id </option> }
+                        }
+                    }
+                </select></label>
+            <label for="TrangThaiSuDung"><b>Trạng thái sử dụng</b><input type="datetime" name="TrangThaiSuDung" value="@Model.TrangThaiSuDung" placeholder="Trạng thái sử dụng" required readonly></label>
+            <label for="ThoiDiemSuDung"><b>Thời điểm sử dụng</b><input type="datetime" name="ThoiDiemSuDung" value="@Model.ThoiDiemSuDung" placeholder="Thời điểm sử dụng"min="1/1/1753T12:00:00" max="9999-12-31T11:59Z" required readonly></label>
+        </div>
+
+        <button type="button" class="btn" onclick="cancel()">Hủy</button>
+        <button type="submit" class="btn btn-signup">Cập nhật</button>
+    </form>
+</div>
+<!--****************************** End-UPDATE Popup Form ******************************-->
+<!--****************************** Start-DELETE Popup Form - Modal ******************************-->
+<div class="form-popup" id="form-popup4">
+    <form asp-page-handler="delete" class="f-signup" method="post" id="form_delete" asp-route-id="@Model.Id">
+        <p>Vui lòng xác nhận bạn muốn xóa mã @Model.VeId bằng cách nhấn nút Xóa.</p>
+
+        <button type="button" class="btn" onclick="cancel()">Hủy</button>
+        <button type="submit" class="btn btn-signup">Xóa</button>
+    </form>
+</div>
+<!--****************************** End-DELETE Popup Form ******************************-->
+<script>
+    $(document).ready(function() {
+        var a = document.getElementById("quayLai")
+        a.style.display = "none";
+    })
+        
+    if (@Model.chuoi == "") {
+        $(".alert").style.display = "none";
+    }
+</script>

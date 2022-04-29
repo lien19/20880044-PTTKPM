@@ -1,0 +1,216 @@
+﻿@page "{handler?}/{Id?}"
+@model PTTKPM.Pages.MH_NguoiDungModel
+@{
+    List<string> colHeader = new List<string>() { "Id", "Email", "Password", "Phân Lọai", "Thời Gian", "Mã số Công Ty TDN", "Quản Trị Hệ Thống" };
+    var chuoi2 = string.Empty;
+}
+
+
+
+<!--****************************** Start-Body Popup Form - Modal ******************************-->
+<div id="search">
+    <form asp-page-handler="search" method="post">
+        <input type="text" name="keyword" value="@Model.keyword">
+        <button type="submit" class="btn-search">Tìm kiếm</button>
+    </form>
+</div>
+<div id="a"></div>
+<!--****************************** End-Body Popup Form - Modal ******************************-->
+<div class="alert" style="background: yellow; width:max-content; float: right; cursor:pointer; color: red" id="quayLai">
+    <a href="/MH_NguoiDung">@Model.chuoi  </a>
+    <span class="closebtn" onclick="this.parentElement.style.display='none';" style="font-size:22px">&times;</span>
+</div>
+
+@*<div style="color:#0366d6; cursor:pointer" onclick="document.getElementById('form-popup2').style.display='block'"><b>Tạo mới</b></div>*@
+
+<!--****************************** Start-Body Popup Form - Modal ******************************-->
+<div class="col2" style="overflow:scroll;">
+    <table>
+        <tr>
+            <th></th>
+            @foreach (var item in colHeader)
+            {
+                if (item != "Mã số Công Ty TDN")
+                {
+                    <th><div style="text-align:center; ">@item</div></th>
+ }
+                else
+                { @if (Model.PhanLoai_session != "SoGiaoThong")
+                    {
+                        <th><div style="text-align:center; ">@item</div></th>
+}}
+        }
+        </tr>
+        @if (Model.danhsach != null)
+        {
+            @foreach (var item in Model.danhsach)
+            {
+                <tr>
+                    <td><div class="fixed"><div class=""><input type="checkbox" name="ck" id=""></div></div></td>
+                    <td>
+                        <div class="container">
+                            <div class="content">@item.Id</div>
+                            <div class="spacer">@item.Id</div>
+                            <span>&nbsp;</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="container">
+                            <div class="content">@item.Email</div>
+                            <div class="spacer">@item.Email</div>
+                            <span>&nbsp;</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="container">
+                            <div class="content">@item.Password</div>
+                            <div class="spacer">@item.Password</div>
+                            <span>&nbsp;</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="container">
+                            <div class="content">@item.PhanLoai</div>
+                            <div class="spacer">@item.PhanLoai</div>
+                            <span>&nbsp;</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="container">
+                            <div class="content">@item.ThoiGian</div>
+                            <div class="spacer">@item.ThoiGian</div>
+                            <span>&nbsp;</span>
+                        </div>
+                    </td>
+                    @if (Model.PhanLoai_session != "SoGiaoThong")
+                    {
+                        <td>
+                            <div class="container">
+                                <div class="content">@item.CongTyTDNId</div>
+                                <div class="spacer">@item.CongTyTDNId</div>
+                                <span>&nbsp;</span>
+                            </div>
+                        </td>
+                    }
+                    <td>
+                        <div class="container">
+                            <div class="content">@item.QuanTriHeThong</div>
+                            <div class="spacer">@item.QuanTriHeThong</div>
+                            <span>&nbsp;</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="container" style="display:flex; align-items:center;">
+                            <div class="content">
+                                <a href="/MH_NguoiDung/update?Id=@item.Id">Sửa</a>
+                                @if (Model.QuanTriHeThong_session == "1")
+                                {<span> | </span><a href="/MH_NguoiDung/delete?Id=@item.Id"> Xóa </a>}
+                            </div>
+                            <div class="spacer"><a href="#">Sửa</a> | <a href="#">Xóa</a></div>
+                            <span>&nbsp;</span>
+                        </div>
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+
+</div>
+
+<!--****************************** End-Body Popup Form - Modal ******************************-->
+<!--****************************** Start-CREATE Popup Form - Modal ******************************-->
+<div class="form-popup" id="form-popup2">
+    <form asp-page-handler="create" class="f-signup" method="post">
+        <h1>Thêm mới Người dùng</h1>
+        <div class="input_container">
+            <label for="Email"><b>Email</b><input type="text" name="Email" value="@Model.Email" placeholder="Email" required></label>
+            <label for="Password"><b>Password</b><input type="text" name="Password" value="@Model.Password" placeholder="Password" required></label>
+            <label for="PhanLoai"><b>Phân Lọai</b><input type="text" name="PhanLoai" value="@Model.PhanLoai" placeholder="Phân Lọai" required></label>
+            <label for="ThoiGian"><b>Thời Gian</b><input type="datetime" name="ThoiGian" value="@Model.ThoiGian" placeholder="Thời Gian" required></label>
+            @if (Model.PhanLoai_session != "SoGiaoThong")
+            {
+                <label for="CongTyTDNId"><b>Mã số công ty TDN</b><input type="text" name="CongTyTDNId" value="@Model.CongTyTDNId" placeholder="Mã số công ty TDN" required readonly></label>
+
+                @*<label for="CongTyTDNId"><b>Mã số công ty</b>
+                    <select name="CongTyTDNId" placeholder="Mã số công ty" required>
+                        <option value=""> </option>
+                        @if (Model.DS_CongTyTDN != null) { foreach (var item in Model.DS_CongTyTDN) { <option value="@item.Id"> @item.Id </option> } }
+                    </select></label>*@
+            }
+            <label for="QuanTriHeThong">
+                <b>Quản Trị Hệ Thống</b>
+                <select name="QuanTriHeThong" placeholder="Quản trị hệ thống" required>
+                    <option value=""> </option>
+                    @for (int i = 0; i < 2; i++)
+                    {
+                        <option value="@i"> @i </option>
+}
+                </select>
+            </label>
+        </div>
+
+        <button type="button" class="btn" onclick="document.getElementById('form-popup2').style.display='none'">Hủy</button>
+        <button type="submit" class="btn btn-signup">Thêm</button>
+    </form>
+</div>
+<!--****************************** End-CREATE Popup Form ******************************-->
+<!--****************************** Start-UPDATE Popup Form - Modal ******************************-->
+<div class="form-popup" id="form-popup3">
+    <form asp-page-handler="update" class="f-signup" method="post" id="form_update" asp-route-id="@Model.Id">
+        <h1>Cập nhật Người dùng</h1>
+        <div class="input_container">
+            <label for="Email"><b>Email</b><input type="text" name="Email" value="@Model.Email" placeholder="Email" required readonly></label>
+            <label for="Password"><b>Password</b><input type="text" name="Password" value="@Model.Password" placeholder="Password" required readonly></label>
+            <label for="PhanLoai"><b>Phân Lọai</b><input type="text" name="PhanLoai" value="@Model.PhanLoai" placeholder="Phân Lọai" required readonly></label>
+            <label for="ThoiGian"><b>Thời Gian</b><input type="datetime" name="ThoiGian" value="@Model.ThoiGian" placeholder="Thời Gian" required readonly></label>
+            @if (Model.PhanLoai_session != "SoGiaoThong")
+            {
+                <label for="CongTyTDNId"><b>Mã số công ty TDN</b><input type="text" name="CongTyTDNId" value="@Model.CongTyTDNId" placeholder="Mã số công ty TDN" required readonly></label>
+
+                @*<label for="CongTyTDNId"><b>Mã số công ty TDN</b>
+                    <select name="CongTyTDNId">
+                        <option value="" disabled> </option>
+                        @if (Model.DS_CongTyTDN != null)
+                        {
+                            foreach (var item in Model.DS_CongTyTDN)
+                            {
+                                if (@item.Id != @Model.CongTyTDNId) { <option value="@item.Id"> @item.Id </option> }
+                                else { <option value="@Model.CongTyTDNId" selected> @item.Id </option> }
+                            }
+                        }
+                    </select></label>*@
+            }
+            <label for="QuanTriHeThong">
+                <b>Quản Trị Hệ Thống</b>
+                <select name="QuanTriHeThong" placeholder="Quản trị hệ thống" required>
+                    <option value=""> </option>
+                    @for (int i = 0; i < 2; i++)
+                    {
+                        if (@i != @Model.QuanTriHeThong)
+                        {
+                            <option value="@i"> @i </option>
+ }
+                        else
+                        {
+                            <option value="@Model.QuanTriHeThong" selected> @i </option>
+}
+                    }
+                </select>
+            </label>
+        </div>
+
+        <button type="button" class="btn" onclick="cancel()">Hủy</button>
+        <button type="submit" class="btn btn-signup">Cập nhật</button>
+    </form>
+</div>
+<!--****************************** End-UPDATE Popup Form ******************************-->
+<!--****************************** Start-DELETE Popup Form - Modal ******************************-->
+<div class="form-popup" id="form-popup4">
+    <form asp-page-handler="delete" class="f-signup" method="post" id="form_delete" asp-route-id="@Model.Id">
+        <p>Vui lòng xác nhận bạn muốn xóa mã @Model.Email bằng cách nhấn nút Xóa.</p>
+
+        <button type="button" class="btn" onclick="cancel()">Hủy</button>
+        <button type="submit" class="btn btn-signup">Xóa</button>
+    </form>
+</div>
+<!--****************************** End-DELETE Popup Form ******************************-->
